@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://norman520.github.io/</id>
-    <title>Gridea</title>
-    <updated>2021-02-05T14:17:58.458Z</updated>
+    <title>Norman的博客</title>
+    <updated>2021-02-05T14:48:55.807Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://norman520.github.io/"/>
     <link rel="self" href="https://norman520.github.io/atom.xml"/>
-    <subtitle>温故而知新</subtitle>
+    <subtitle>一个菜鸡的小窝 | 生活没有一劳永逸，想要不被抛弃，必须自己争气。</subtitle>
     <logo>https://norman520.github.io/images/avatar.png</logo>
     <icon>https://norman520.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, Gridea</rights>
+    <rights>All rights reserved 2021, Norman的博客</rights>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://norman520.github.io/post/hello-gridea/</id>
