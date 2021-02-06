@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hello Gridea | Norman的博客</title>
+<title>题解 [CodeForces - 888E]Maximum Subsequence | Norman的博客</title>
 <meta name="description" content="一个菜鸡的小窝 | 生活没有一劳永逸，想要不被抛弃，必须自己争气。" />
 <link rel="shortcut icon" href="https://norman6666.github.io/favicon.ico">
 <link rel="stylesheet" href="https://norman6666.github.io/styles/main.css">
@@ -15,15 +15,11 @@
 <script src="https://norman6666.github.io/media/js/jquery.magnific-popup.min.js"></script>
 <script src="https://norman6666.github.io/media/js/functions.js"></script>
     <meta name="referrer" content="never">
-    <meta name="description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
-
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
-    <meta name="keywords" content="Gridea" />
+    <meta name="description" content="题解 [CodeForces - 888E]Maximum Subsequence
+vjudge链接
+方法：折半法
+这道题的数据为 1≤n≤351 ≤ n ≤ 351≤n≤35，那么暴力的话，复杂度最大为 O(232)O(2^{32})O(..." />
+    <meta name="keywords" content="" />
     <script src="https://norman6666.github.io/media/js/waterfall.min.js"></script>
     <script src="https://norman6666.github.io/media/js/prism.min.js"></script>
   </head>
@@ -97,23 +93,21 @@ Gridea 主页
       <main id="single" class="main grid-container fullcover no-sidebar aos-init aos-animate" data-aos="fade">
 
         <div class="center content">
-          <div class="featured-image cover" style="background-image: url('https://norman6666.github.io/post-images/hello-gridea.png');">
+          <div class="featured-image cover" style="background-image: url('\media\images\custom-featureImage.png');">
             <div class="meta top"> 
-              <time class="meta-info" style="float:left;" datetime="2018-12-12"><i class="fa fa-calendar"></i><span class="lately">2 年前</span></time>
+              <time class="meta-info" style="float:left;" datetime="2021-02-06"><i class="fa fa-calendar"></i><span class="lately">几秒前</span></time>
               
-              <a href="https://norman6666.github.io/post/hello-gridea/#comments" class="comments meta-info" title="">
-                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/hello-gridea/"> </span>
+              <a href="https://norman6666.github.io/post/ti-jie-codeforces-888emaximum-subsequence/#comments" class="comments meta-info" title="">
+                <i class="fa fa-comment remixicon"></i><span class="comment-count valine-comment-count" data-xid="/ti-jie-codeforces-888emaximum-subsequence/"> </span>
               </a>
-              <span id="/hello-gridea/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
+              <span id="/ti-jie-codeforces-888emaximum-subsequence/" class="leancloud_visitors views-counter meta-info" title=""><i class="fa fa-leancloud remixicon"></i><span class="leancloud-visitors-count"></span></span>
               
             </div>
             <div class="info">
               <div class="tags ">
                 
-                      <a href="https://norman6666.github.io/tag/6ubPQLgU_/" class="ctag ctag-0 ctag-6ubPQLgU_" aria-label="">Gridea</a>
-                    
               </div>
-              <h1 class="title ularge white bold">Hello Gridea</h1>
+              <h1 class="title ularge white bold">题解 [CodeForces - 888E]Maximum Subsequence</h1>
             </div>
           </div>
         </div>  
@@ -123,27 +117,95 @@ Gridea 主页
             <article class="main-article post">
               <section class="post-content">
                 <div class="text">
-                  <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+                  <h2 id="题解-codeforces-888emaximum-subsequence">题解 [CodeForces - 888E]Maximum Subsequence</h2>
+<p><a href="https://vjudge.net/problem/CodeForces-888E#author=0">vjudge链接</a></p>
+<h3 id="方法折半法">方法：折半法</h3>
+<p>这道题的数据为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>≤</mo><mi>n</mi><mo>≤</mo><mn>35</mn></mrow><annotation encoding="application/x-tex">1 ≤ n ≤ 35</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span><span class="mord">5</span></span></span></span>，那么暴力的话，复杂度最大为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mn>2</mn><mn>32</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(2^{32})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>，很明显会超时。</p>
+<p>那么我们的折半法就浓重登场啦！</p>
+<p>思路：把其分两半，先枚举前一半，再枚举后一半，这样复杂度就可以满足了，顶多 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mn>2</mn><mn>18</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(2^{18})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">8</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。</p>
+<p>先读入数据到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span> 数组并取模好。</p>
+<p>用二进制表示选与不选，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 表示不选，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 表示选，枚举前一半的各种组合求和并取模后的结果，存到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span> 数组。</p>
+<p>之后暴力枚举另一半，同理求得各种组合求和并取模后的结果，在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span> 数组里找到一个数使这个数加结果取模后的值最大，即在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span> 数组内找到小于等于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>o</mi><mi>d</mi><mo>−</mo><mn>1</mn><mo>−</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">mod - 1 - x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">o</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> （<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 为当前结果）的最大值。</p>
+<p>用二分解决。</p>
+<p><a href="https://vjudge.net/solution/29581690">AC记录</a></p>
+<h2 id="code">Code:</h2>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+//考虑unsigned long long
+typedef long long ll;
+
+const int N = 40;
+int a[N]; 
+const int M = 1000010;
+int b[M];
+int cnt = 0;
+
+int findd(int x) {
+	//best表示二分的结果 
+	int l = 1,r = cnt,best = 0;
+	while(l &lt;= r) {
+		int mid = (l + r) &gt;&gt; 1;
+		if (b[mid] &lt;= x) {
+			l = mid + 1;
+			best = mid;
+		} else {
+			r = mid - 1;
+		}
+	}
+	return b[best];
+}
+
+int main () {
+	std::ios::sync_with_stdio(false);
+	int n,mod;
+	cin &gt;&gt; n &gt;&gt; mod;
+	for (int i = 0;i &lt; n;i++) {
+		cin &gt;&gt; a[i];
+		a[i] %= mod;
+	}
+	//获取前一半的长度 
+	int m = n / 2;
+	//用二进制数表示数的状态 
+	for (int i = 0;i &lt; (1 &lt;&lt; m);i++) {
+		int tmp = 0;
+		for (int j = 0;j &lt; m;j++) {
+			//选 
+			if (i &amp; (1 &lt;&lt; j)) {
+				//更新答案 
+				tmp = (tmp + a[j]) % mod;
+			}
+		}
+		cnt++;
+		//存入b数组 
+		b[cnt] = tmp;
+	}
+	//排序便于二分 
+	sort(b + 1,b+cnt+1);
+	//另一半的长度 
+	m = n - n / 2;
+	int ans = 0;
+	//同理 
+	for (int i = 0;i &lt; (1 &lt;&lt; m);i++) {
+		int tmp = 0;
+		for (int j = 0;j &lt; m;j++) {
+			if (i &amp; (1 &lt;&lt; j)) {
+				//注意这里是另一半，需加上之前的长度 
+				int k = j + n / 2;
+				tmp = (tmp + a[k]) % mod;
+			}
+		}
+		//找到最大值 
+		int x = findd(mod - tmp - 1);
+		//更新答案 
+		ans = max(ans,(x + tmp) % mod);
+	}
+	cout &lt;&lt; ans &lt;&lt; endl;
+	return 0;
+}
+
+
+</code></pre>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>h</mi><mi>e</mi><mtext> </mtext><mi>e</mi><mi>n</mi><mi>d</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">The\ end.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mspace"> </span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord">.</span></span></span></span></p>
 
                 </div>
                 <div class="clear"></div>
@@ -153,19 +215,19 @@ Gridea 主页
 
             <section class="related section">
               
-              <article class="prev grid-50 tablet-grid-50 grid-parent">
+              
+              <article class="next grid-50 tablet-grid-50 grid-parent">
                 <div class="thumb cover lazy loaded" style="background-image: url('https://norman6666.github.io/media/images/gridea.jpg');"></div>
-                 <a href="https://norman6666.github.io/post/ti-jie-poj-1753flip-game/" class="full-link"></a>
+                 <a href="https://norman6666.github.io/post/ti-jie-atcoder-arc098_bxor-sum-2/" class="full-link"></a>
                  <div class="info">
                   <time datetime="2021-02-06">2021-02-06</time>
-                  <h4 class="title white no-margin">题解 [POJ-1753]Flip Game</h4>
+                  <h4 class="title white no-margin">题解 [AtCoder - arc098_b]Xor Sum 2</h4>
                 </div>
                  <span class="epcl-button red">
-                  <img src="https://norman6666.github.io/media/images/left-arrow.svg" width="15" alt="Left Arrow">
+                  <img src="https://norman6666.github.io/media/images/right-arrow.svg" width="15" alt="Left Arrow">
                 </span>
                 <div class="overlay"></div>
               </article>
-              
               
 
                 <div class="clear"></div>
