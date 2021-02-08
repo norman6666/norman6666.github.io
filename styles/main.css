@@ -2178,7 +2178,7 @@ body {
     }.box-shadow-wrapper {
       box-shadow: none !important;
     }body {
-      cursor: url('/media/curs/default_link.cur'), default;
+      cursor: default;
     }a {
       cursor: pointer;
     }input, textarea, code {
