@@ -9,7 +9,7 @@
 <meta name="description" content="生活没有一劳永逸，想要不被抛弃，必须自己争气。">
 <meta name="theme-color" content="#000">
 <title>题解 [POJ 1328]Radar Installation | Norman</title>
-<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/favicon.ico?v=1612790098077">
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/favicon.ico?v=1612795112001">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/css/pisces.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/fonts/font-awesome.css">
 <link
@@ -218,7 +218,7 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">6</span>
+        <span class="site-item-stat-count">7</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
@@ -709,6 +709,10 @@ int main () {
   </div>
   <div class="nav">
     <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="题解 [POJ 3617]Best Cow Line" href="https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/">题解 [POJ 3617]Best Cow Line</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="题解 [POJ 3617]Best Cow Line" href="https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/">上一篇</a>
       
     </div>
     <div class="nav-next">
@@ -1219,6 +1223,98 @@ int main () {
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/"" data-c="
+          &lt;h2 id=&#34;题解-poj-3617best-cow-line&#34;&gt;题解 [POJ 3617]Best Cow Line&lt;/h2&gt;
+&lt;!-- more --&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/problem/POJ-3617&#34;&gt;vjudge链接&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;方法贪心&#34;&gt;方法：贪心&lt;/h3&gt;
+&lt;p&gt;这题我们可以用贪心解决。&lt;/p&gt;
+&lt;p&gt;对于选的决策，当队首不等于队尾的时候很好办，选最小的行。&lt;/p&gt;
+&lt;p&gt;我们的主要问题出在当队首等于队尾的时候选哪边？&lt;/p&gt;
+&lt;p&gt;好比这样一个序列：&lt;code&gt;CBAC&lt;/code&gt;，字典序最小的排法为&lt;code&gt;CABC&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;如果我们碰见相同的时候，假如我们第一次选了队首的&lt;code&gt;C&lt;/code&gt;，则我们的答案将变成&lt;code&gt;CBAC&lt;/code&gt;。&lt;/p&gt;
+&lt;p&gt;所以相同时不可以随意选一个。&lt;/p&gt;
+&lt;p&gt;当我们遇见队首和队尾相同时，继续往中间比较，直至出现两个不同的字符，再取小的那边，保证字典序最小。&lt;/p&gt;
+&lt;p&gt;具体见代码。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://vjudge.net/solution/29634959&#34;&gt;AC记录&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;code&#34;&gt;Code:&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-cpp&#34;&gt;#include&amp;lt;iostream&amp;gt;
+using namespace std;
+//考虑unsigned long long
+typedef long long ll;
+inline int read(){
+	int z=0,x=1;char c=getchar();
+	while(c&amp;gt;&#39;9&#39;||c&amp;lt;&#39;0&#39;){if(c==&#39;-&#39;) x=-x; c=getchar();}
+	while(c&amp;gt;=&#39;0&#39;&amp;amp;&amp;amp;c&amp;lt;=&#39;9&#39;) z=z*10+c-&#39;0&#39;,c=getchar();
+	return z*x;
+}
+
+const int N = 2010;
+char a[N];
+char ans[N];
+int main () {
+	std::ios::sync_with_stdio(false);
+	int n;
+	cin &amp;gt;&amp;gt; n;
+	char x;
+	for (int i = 1;i &amp;lt;= n;i++) {
+		cin &amp;gt;&amp;gt; x;
+		//存入数组 
+		a[i] = x;
+	} 
+	int cnt = 0;
+	int l = 1,r = n;
+	while(l &amp;lt;= r) {
+		//相等的棘手情况 
+		if (a[l] == a[r]) {
+			int i = l,j = r;
+			//过滤两端的字符相等的情况  
+			while(a[i] == a[j] &amp;amp;&amp;amp; i &amp;lt; j) {
+				i++,j--;
+			}
+			//这里忽略的一个细节，当 i &amp;gt; j 时，表示这是一个回文字符串
+			//代码这里就直接进入else了，选队尾
+			//其他的更新都不难了 
+			if (a[i] &amp;lt; a[j]) {
+				cnt++;					
+				ans[cnt] = a[l];
+				l++;
+			} else {
+				cnt++;
+				ans[cnt] = a[r];
+				r--;
+			}
+		} else {
+			//其他的更新都不难了 
+			if (a[l] &amp;lt; a[r]) {
+				cnt++;
+				ans[cnt] = a[l];
+				l++;
+			} else {
+				cnt++;
+				ans[cnt] = a[r];
+				r--;
+			}
+		}
+	}
+	//奇怪的输出要求 
+	for (int i = 1;i &amp;lt;= n;i++) {
+		if (i % 80 == 0) {
+			cout &amp;lt;&amp;lt; ans[i] &amp;lt;&amp;lt; endl;
+		} else {
+			cout &amp;lt;&amp;lt; ans[i];
+		}
+	}
+	cout &amp;lt;&amp;lt; endl;
+	return 0;
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;span class=&#34;katex&#34;&gt;&lt;span class=&#34;katex-mathml&#34;&gt;&lt;math&gt;&lt;semantics&gt;&lt;mrow&gt;&lt;mi&gt;T&lt;/mi&gt;&lt;mi&gt;h&lt;/mi&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mtext&gt; &lt;/mtext&gt;&lt;mi&gt;e&lt;/mi&gt;&lt;mi&gt;n&lt;/mi&gt;&lt;mi&gt;d&lt;/mi&gt;&lt;mi mathvariant=&#34;normal&#34;&gt;.&lt;/mi&gt;&lt;/mrow&gt;&lt;annotation encoding=&#34;application/x-tex&#34;&gt;The\ end.&lt;/annotation&gt;&lt;/semantics&gt;&lt;/math&gt;&lt;/span&gt;&lt;span class=&#34;katex-html&#34; aria-hidden=&#34;true&#34;&gt;&lt;span class=&#34;base&#34;&gt;&lt;span class=&#34;strut&#34; style=&#34;height:0.69444em;vertical-align:0em;&#34;&gt;&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34; style=&#34;margin-right:0.13889em;&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;h&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;mspace&#34;&gt; &lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;n&lt;/span&gt;&lt;span class=&#34;mord mathdefault&#34;&gt;d&lt;/span&gt;&lt;span class=&#34;mord&#34;&gt;.&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/p&gt;
+">题解 [POJ 3617]Best Cow Line</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://norman6666.github.io/post/ti-jie-poj-1328radar-installation/"" data-c="
