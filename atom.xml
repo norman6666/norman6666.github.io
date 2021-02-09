@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://norman6666.github.io</id>
     <title>Norman</title>
-    <updated>2021-02-09T06:04:24.051Z</updated>
+    <updated>2021-02-09T07:40:31.344Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://norman6666.github.io"/>
     <link rel="self" href="https://norman6666.github.io/atom.xml"/>
@@ -10,6 +10,96 @@
     <logo>https://norman6666.github.io/images/avatar.png</logo>
     <icon>https://norman6666.github.io/favicon.ico</icon>
     <rights>All rights reserved 2021, Norman</rights>
+    <entry>
+        <title type="html"><![CDATA[题解 [HDU 4864]Task]]></title>
+        <id>https://norman6666.github.io/post/ti-jie-hdu-4864task/</id>
+        <link href="https://norman6666.github.io/post/ti-jie-hdu-4864task/">
+        </link>
+        <updated>2021-02-09T07:38:42.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="题解-hdu-4864task">题解 [HDU 4864]Task</h2>
+<p><a href="https://vjudge.net/problem/HDU-4864">vjudge链接</a></p>
+<h3 id="方法贪心">方法：贪心</h3>
+<p>这题我们可以用贪心解决。</p>
+<p>这里的一些任务，时间这些数据转换到一个二维坐标系中，当机器位于任务的右上方（即 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">任</mi><msub><mi mathvariant="normal">务</mi><mi>x</mi></msub><mo>≤</mo><mi mathvariant="normal">机</mi><msub><mi mathvariant="normal">器</mi><mi>x</mi></msub></mrow><annotation encoding="application/x-tex">任务_{x} ≤ 机器_{x}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7859700000000001em;vertical-align:-0.15em;"></span><span class="mord cjk_fallback">任</span><span class="mord"><span class="mord cjk_fallback">务</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.301392em;vertical-align:-0.15em;"></span><span class="mord cjk_fallback">机</span><span class="mord"><span class="mord cjk_fallback">器</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">x</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 且 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">任</mi><msub><mi mathvariant="normal">务</mi><mi>y</mi></msub><mo>≤</mo><mi mathvariant="normal">机</mi><msub><mi mathvariant="normal">器</mi><mi>y</mi></msub></mrow><annotation encoding="application/x-tex">任务_{y} ≤ 机器_{y}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.922078em;vertical-align:-0.286108em;"></span><span class="mord cjk_fallback">任</span><span class="mord"><span class="mord cjk_fallback">务</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">y</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.4375em;vertical-align:-0.286108em;"></span><span class="mord cjk_fallback">机</span><span class="mord"><span class="mord cjk_fallback">器</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.15139200000000003em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">y</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>）我们就可以将这个机器和任务匹配。</p>
+<p>由于一个任务的价值是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>500</mn><mo>∗</mo><mi>x</mi><mo>+</mo><mn>2</mn><mo>∗</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">500 * x + 2 * y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 的占比较重，所以我们优先按 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 从大到小排序，当 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 相等时按 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 从大到小排序，得到的利益最大。</p>
+<p>排序后我们的两个数组都是满足单调性的。</p>
+<p>我们可以维护两个指针，用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 来枚举每个任务，用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 来枚举现在机器的横坐标大于等于此任务的横坐标的所有机器，用一个桶来装，以便于我们之后的查找，这样我们的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 不用再次查找，只需要向后枚举即可，因为我们的数组排序后都是满足单调性的。</p>
+<p>每次处理完桶后，就从此任务的纵坐标枚举到最大值 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>100</mn></mrow><annotation encoding="application/x-tex">100</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span></span></span></span>，找到一个最小的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>，与其机器匹配。找到最小的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 的原因是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 更大的可以去匹配一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 更大的任务。</p>
+<p>具体见代码。</p>
+<p><a href="https://vjudge.net/solution/29640071">AC记录</a></p>
+<h2 id="code">Code:</h2>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstring&gt;
+using namespace std;
+//考虑unsigned long long
+typedef long long ll;
+inline int read(){
+	int z=0,x=1;char c=getchar();
+	while(c&gt;'9'||c&lt;'0'){if(c=='-') x=-x; c=getchar();}
+	while(c&gt;='0'&amp;&amp;c&lt;='9') z=z*10+c-'0',c=getchar();
+	return z*x;
+}
+
+const int N = 100010;
+struct node {
+	ll x,y;
+}a[N],b[N]; 
+
+const int M = 110;
+ll cnt[M]; 
+
+bool cmp (node a,node b) {
+	if (a.x == b.x) {
+		return a.y &gt; b.y;
+	} else {
+		return a.x &gt; b.x;
+	}
+}
+int main () {
+	std::ios::sync_with_stdio(false);
+	int n,m;
+	while(~scanf(&quot;%d%d&quot;,&amp;n,&amp;m)) {
+		for (int i = 1;i &lt;= n;i++) {
+			a[i].x = read(),a[i].y = read();
+		}
+		for (int i = 1;i &lt;= m;i++) {
+			b[i].x = read(),b[i].y = read();
+		}
+		//排序 
+		sort(a+1,a+1+n,cmp);
+		sort(b+1,b+1+m,cmp);
+		int j = 1;
+		memset(cnt,0,sizeof(cnt));
+		ll ans = 0,counter = 0;
+		//指针i,j,答案ans和计数器counter，桶cnt 
+		for (int i = 1;i &lt;= m;i++) {
+			//用 j 来枚举现在机器的横坐标大于等于此任务的横坐标的所有机器 
+			//用桶存 
+			while (j &lt;= n &amp;&amp; a[j].x &gt;= b[i].x) {
+				cnt[a[j].y]++;
+				j++;
+			} 
+			//找最小的y 
+			for (int l = b[i].y;l &lt;= 100;l++) {
+				if (cnt[l] != 0) {
+					counter++;
+					ans += b[i].x * 500 + b[i].y * 2;
+					//记得要减掉 
+					cnt[l]--;
+					break;
+				}
+			}
+		}
+		cout &lt;&lt; counter &lt;&lt; ' ' &lt;&lt; ans &lt;&lt; endl;
+	}
+	return 0;
+}
+
+</code></pre>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>h</mi><mi>e</mi><mtext> </mtext><mi>e</mi><mi>n</mi><mi>d</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">The\ end.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mspace"> </span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord">.</span></span></span></span></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[题解 [POJ 3617]Best Cow Line]]></title>
         <id>https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/</id>
