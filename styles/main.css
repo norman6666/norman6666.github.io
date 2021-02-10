@@ -2178,11 +2178,11 @@ body {
     }.box-shadow-wrapper {
       box-shadow: none !important;
     }body {
-      cursor: url('https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/curs/default_normal.cur'), default;
+      cursor: default;
     }a {
-      cursor: url('https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/curs/default_link.cur'), pointer !important;
+      cursor: pointer;
     }input, textarea, code {
-      cursor: url('https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/curs/default_texto.cur'), text !important;
+      cursor: text;
     }code > span.copy-code {
       cursor: pointer;
     }.post img {
