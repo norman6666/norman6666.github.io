@@ -8,7 +8,7 @@
 <meta name="keywords" content="Norman的小博客">
 <meta name="description" content="生活没有一劳永逸，想要不被抛弃，必须自己争气。">
 <meta name="theme-color" content="#000">
-<title>题解 [POJ 3617]Best Cow Line | Norman的Little_blog</title>
+<title>题解 [CodeForces - 527C]Glass Carving | Norman的Little_blog</title>
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/favicon.ico?v=1613038826702">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/css/pisces.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/fonts/font-awesome.css">
@@ -48,8 +48,8 @@
 </script>
 
 
-  <meta name="description" content="题解 [POJ 3617]Best Cow Line" />
-  <meta name="keywords" content="题解" />
+  <meta name="description" content="题解 [CodeForces - 527C]Glass Carving" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -276,9 +276,9 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E9%A2%98%E8%A7%A3-poj-3617best-cow-line">题解 [POJ 3617]Best Cow Line</a>
+<li><a href="#%E9%A2%98%E8%A7%A3-codeforces-527cglass-carving">题解 [CodeForces - 527C]Glass Carving</a>
 <ul>
-<li><a href="#%E6%96%B9%E6%B3%95%E8%B4%AA%E5%BF%83">方法：贪心</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95stl_multiset%E5%92%8Cset">方法：STL_multiset和set</a></li>
 </ul>
 </li>
 <li><a href="#code">Code:</a></li>
@@ -549,8 +549,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/">
-      题解 [POJ 3617]Best Cow Line
+    <a class="post-title-link" href="https://norman6666.github.io/post/ti-jie-codeforces-527cglass-carving/">
+      题解 [CodeForces - 527C]Glass Carving
     </a>
   </h1>
   <div class="post-meta">
@@ -558,22 +558,9 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-02-08 22:38:07">2021-02-08</span>
+      <span class="publish-time" data-t="2021-02-11 18:19:54">2021-02-11</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://norman6666.github.io/tag/EHu5NeZAD/">
-        <span>题解</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
@@ -582,12 +569,12 @@
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>487<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>502<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
     
     
-    <span id="/post/ti-jie-poj-3617best-cow-line/" data-flag-title="题解 [POJ 3617]Best Cow Line" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/ti-jie-codeforces-527cglass-carving/" data-flag-title="题解 [CodeForces - 527C]Glass Carving" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span><span class="language" data-lan="view">浏览量</span>：<span class="leancloud-visitors-count"></span></span>
@@ -596,21 +583,19 @@
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <h2 id="题解-poj-3617best-cow-line">题解 [POJ 3617]Best Cow Line</h2>
-<!-- more -->
-<p><a href="https://vjudge.net/problem/POJ-3617">vjudge链接</a></p>
-<h3 id="方法贪心">方法：贪心</h3>
-<p>这题我们可以用贪心解决。</p>
-<p>对于选的决策，当队首不等于队尾的时候很好办，选最小的行。</p>
-<p>我们的主要问题出在当队首等于队尾的时候选哪边？</p>
-<p>好比这样一个序列：<code>CBAC</code>，字典序最小的排法为<code>CABC</code>。</p>
-<p>如果我们碰见相同的时候，假如我们第一次选了队首的<code>C</code>，则我们的答案将变成<code>CBAC</code>。</p>
-<p>所以相同时不可以随意选一个。</p>
-<p>当我们遇见队首和队尾相同时，继续往中间比较，直至出现两个不同的字符，再取小的那边，保证字典序最小。</p>
+              <h2 id="题解-codeforces-527cglass-carving">题解 [CodeForces - 527C]Glass Carving</h2>
+<p><a href="https://vjudge.net/problem/CodeForces-527C">vjudge链接</a></p>
+<h3 id="方法stl_multiset和set">方法：STL_multiset和set</h3>
+<p>首先我们可以发现，横着切与竖着切互相是没有影响的。</p>
+<p>其实最大面积就是横向的最大间距乘上竖向的最大间距。</p>
+<p>如果我们新加一道切痕，而这道切痕只会影响到一个间距，我们只需要找到这个间距，删掉在添加以这条分割线为中心线的左右两个间距即可。</p>
+<p>用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 维护每条切痕的位置。用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 维护每个区间的长度，共 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 个。</p>
+<p>其优势是可以自动排序，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 可以去重。</p>
+<p>查找的方式很简单，找到第一个大于等于此切割点的地方左移一位的位置到此位置便是区间。</p>
 <p>具体见代码。</p>
-<p><a href="https://vjudge.net/solution/29634959">AC记录</a></p>
+<p><a href="https://vjudge.net/solution/29654184">AC记录</a></p>
 <h2 id="code">Code:</h2>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 //考虑unsigned long long
 typedef long long ll;
@@ -620,67 +605,63 @@ inline int read(){
 	while(c&gt;='0'&amp;&amp;c&lt;='9') z=z*10+c-'0',c=getchar();
 	return z*x;
 }
-
-const int N = 2010;
-char a[N];
-char ans[N];
+//x,y表示区间长度，x2,y2表示切割点的位置
+multiset&lt;int&gt; x,y;
+set&lt;int&gt; x2,y2;
 int main () {
 	std::ios::sync_with_stdio(false);
-	int n;
-	cin &gt;&gt; n;
-	char x;
+	int w,h,n;
+	scanf(&quot;%d%d%d&quot;,&amp;w,&amp;h,&amp;n);
+    //初始化
+	x.insert(w);
+	y.insert(h);  
+	x2.insert(0);
+	x2.insert(w);
+	y2.insert(0);
+	y2.insert(h);   
+	char a;
+	int b;
 	for (int i = 1;i &lt;= n;i++) {
-		cin &gt;&gt; x;
-		//存入数组 
-		a[i] = x;
+		getchar();
+        scanf(&quot;%c %d&quot;,&amp;a, &amp;b);
+		if (a == 'V') {
+            //找到第一个大于等于b的位置
+			multiset&lt;int&gt;::iterator it1,it2,it3;
+			it1 = x2.lower_bound(b);
+			it2 = it1;
+            //左移
+			if (it1 != x2.begin()) {
+				it1--;
+			}   
+            //加入该切割点
+			x2.insert(b); 
+            //区间长度
+			int len = *it2 - *it1;
+			it3 = x.lower_bound(len);
+            //删除
+			x.erase(it3);
+            //加入区间长度
+			x.insert(*it2 - b);
+			x.insert(b - *it1); 
+		} else {
+            //同理
+			multiset&lt;int&gt;::iterator it1,it2,it3;
+			it1 = y2.lower_bound(b);
+			it2 = it1;
+			if (it1 != y2.begin()) {
+				it1--;
+			}   
+			y2.insert(b); 
+			int len = *it2 - *it1;
+			it3 = y.lower_bound(len);
+			y.erase(it3);
+			y.insert(*it2 - b);
+			y.insert(b - *it1);  
+		}
+		printf(&quot;%lld\n&quot;,1ll * *x.rbegin() * *y.rbegin());
 	} 
-	int cnt = 0;
-	int l = 1,r = n;
-	while(l &lt;= r) {
-		//相等的棘手情况 
-		if (a[l] == a[r]) {
-			int i = l,j = r;
-			//过滤两端的字符相等的情况  
-			while(a[i] == a[j] &amp;&amp; i &lt; j) {
-				i++,j--;
-			}
-			//这里忽略的一个细节，当 i &gt; j 时，表示这是一个回文字符串
-			//代码这里就直接进入else了，选队尾
-			//其他的更新都不难了 
-			if (a[i] &lt; a[j]) {
-				cnt++;					
-				ans[cnt] = a[l];
-				l++;
-			} else {
-				cnt++;
-				ans[cnt] = a[r];
-				r--;
-			}
-		} else {
-			//其他的更新都不难了 
-			if (a[l] &lt; a[r]) {
-				cnt++;
-				ans[cnt] = a[l];
-				l++;
-			} else {
-				cnt++;
-				ans[cnt] = a[r];
-				r--;
-			}
-		}
-	}
-	//奇怪的输出要求 
-	for (int i = 1;i &lt;= n;i++) {
-		if (i % 80 == 0) {
-			cout &lt;&lt; ans[i] &lt;&lt; endl;
-		} else {
-			cout &lt;&lt; ans[i];
-		}
-	}
-	cout &lt;&lt; endl;
 	return 0;
 }
-
 </code></pre>
 <p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>h</mi><mi>e</mi><mtext> </mtext><mi>e</mi><mi>n</mi><mi>d</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">The\ end.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mspace"> </span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord">.</span></span></span></span></p>
 
@@ -695,7 +676,7 @@ int main () {
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/" title="题解 [POJ 3617]Best Cow Line">https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/</a>
+      <a href="https://norman6666.github.io/post/ti-jie-codeforces-527cglass-carving/" title="题解 [CodeForces - 527C]Glass Carving">https://norman6666.github.io/post/ti-jie-codeforces-527cglass-carving/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -704,21 +685,15 @@ int main () {
   </ul>
   <div class="tags">
     
-      <a href="https://norman6666.github.io/tag/EHu5NeZAD/"># 题解</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="题解 [HDU 4864]Task" href="https://norman6666.github.io/post/ti-jie-hdu-4864task/">题解 [HDU 4864]Task</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="题解 [HDU 4864]Task" href="https://norman6666.github.io/post/ti-jie-hdu-4864task/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="题解 [POJ 1328]Radar Installation" href="https://norman6666.github.io/post/ti-jie-poj-1328radar-installation/">题解 [POJ 1328]Radar Installation</a>
-        <a class="nav-mobile-next" title="题解 [POJ 1328]Radar Installation" href="https://norman6666.github.io/post/ti-jie-poj-1328radar-installation/">下一篇</a>
+        <a class="nav-pc-next" title="题解 [HDU 2275]Kiki &amp; Little Kiki 1" href="https://norman6666.github.io/post/ti-jie-hdu-2275kiki-and-little-kiki-1/">题解 [HDU 2275]Kiki &amp; Little Kiki 1</a>
+        <a class="nav-mobile-next" title="题解 [HDU 2275]Kiki &amp; Little Kiki 1" href="https://norman6666.github.io/post/ti-jie-hdu-2275kiki-and-little-kiki-1/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>

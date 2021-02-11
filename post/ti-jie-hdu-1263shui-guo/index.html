@@ -8,7 +8,7 @@
 <meta name="keywords" content="Norman的小博客">
 <meta name="description" content="生活没有一劳永逸，想要不被抛弃，必须自己争气。">
 <meta name="theme-color" content="#000">
-<title>题解 [POJ 3617]Best Cow Line | Norman的Little_blog</title>
+<title>题解 [HDU 1263]水果 | Norman的Little_blog</title>
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/favicon.ico?v=1613038826702">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/css/pisces.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/fonts/font-awesome.css">
@@ -48,7 +48,7 @@
 </script>
 
 
-  <meta name="description" content="题解 [POJ 3617]Best Cow Line" />
+  <meta name="description" content="题解 [HDU 1263]水果" />
   <meta name="keywords" content="题解" />
 </head>
 
@@ -276,9 +276,9 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E9%A2%98%E8%A7%A3-poj-3617best-cow-line">题解 [POJ 3617]Best Cow Line</a>
+<li><a href="#%E9%A2%98%E8%A7%A3-hdu-1263%E6%B0%B4%E6%9E%9C">题解 [HDU 1263]水果</a>
 <ul>
-<li><a href="#%E6%96%B9%E6%B3%95%E8%B4%AA%E5%BF%83">方法：贪心</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95stl_map">方法：STL_map</a></li>
 </ul>
 </li>
 <li><a href="#code">Code:</a></li>
@@ -549,8 +549,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/">
-      题解 [POJ 3617]Best Cow Line
+    <a class="post-title-link" href="https://norman6666.github.io/post/ti-jie-hdu-1263shui-guo/">
+      题解 [HDU 1263]水果
     </a>
   </h1>
   <div class="post-meta">
@@ -558,7 +558,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-02-08 22:38:07">2021-02-08</span>
+      <span class="publish-time" data-t="2021-02-11 18:19:05">2021-02-11</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -577,17 +577,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>3<span class="language" data-lan="minute">分钟</span></span>
+      <span>2<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>487<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>273<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
     
     
-    <span id="/post/ti-jie-poj-3617best-cow-line/" data-flag-title="题解 [POJ 3617]Best Cow Line" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/ti-jie-hdu-1263shui-guo/" data-flag-title="题解 [HDU 1263]水果" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span><span class="language" data-lan="view">浏览量</span>：<span class="leancloud-visitors-count"></span></span>
@@ -596,21 +596,16 @@
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <h2 id="题解-poj-3617best-cow-line">题解 [POJ 3617]Best Cow Line</h2>
-<!-- more -->
-<p><a href="https://vjudge.net/problem/POJ-3617">vjudge链接</a></p>
-<h3 id="方法贪心">方法：贪心</h3>
-<p>这题我们可以用贪心解决。</p>
-<p>对于选的决策，当队首不等于队尾的时候很好办，选最小的行。</p>
-<p>我们的主要问题出在当队首等于队尾的时候选哪边？</p>
-<p>好比这样一个序列：<code>CBAC</code>，字典序最小的排法为<code>CABC</code>。</p>
-<p>如果我们碰见相同的时候，假如我们第一次选了队首的<code>C</code>，则我们的答案将变成<code>CBAC</code>。</p>
-<p>所以相同时不可以随意选一个。</p>
-<p>当我们遇见队首和队尾相同时，继续往中间比较，直至出现两个不同的字符，再取小的那边，保证字典序最小。</p>
+              <h2 id="题解-hdu-1263水果">题解 [HDU 1263]水果</h2>
+<p><a href="https://vjudge.net/problem/HDU-1263">vjudge链接</a></p>
+<h3 id="方法stl_map">方法：STL_map</h3>
+<p>这题我们用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span> 嵌套 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>a</mi><mi>p</mi></mrow><annotation encoding="application/x-tex">map</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span></span></span></span> 解决就行了，没什么好讲的。</p>
 <p>具体见代码。</p>
-<p><a href="https://vjudge.net/solution/29634959">AC记录</a></p>
+<p><a href="https://vjudge.net/solution/29652271">AC记录</a></p>
 <h2 id="code">Code:</h2>
 <pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;map&gt;
+#include&lt;string&gt; 
 using namespace std;
 //考虑unsigned long long
 typedef long long ll;
@@ -620,64 +615,35 @@ inline int read(){
 	while(c&gt;='0'&amp;&amp;c&lt;='9') z=z*10+c-'0',c=getchar();
 	return z*x;
 }
-
-const int N = 2010;
-char a[N];
-char ans[N];
+map&lt;string,map&lt;string,int&gt; &gt; mp;
 int main () {
-	std::ios::sync_with_stdio(false);
 	int n;
 	cin &gt;&gt; n;
-	char x;
-	for (int i = 1;i &lt;= n;i++) {
-		cin &gt;&gt; x;
-		//存入数组 
-		a[i] = x;
-	} 
-	int cnt = 0;
-	int l = 1,r = n;
-	while(l &lt;= r) {
-		//相等的棘手情况 
-		if (a[l] == a[r]) {
-			int i = l,j = r;
-			//过滤两端的字符相等的情况  
-			while(a[i] == a[j] &amp;&amp; i &lt; j) {
-				i++,j--;
-			}
-			//这里忽略的一个细节，当 i &gt; j 时，表示这是一个回文字符串
-			//代码这里就直接进入else了，选队尾
-			//其他的更新都不难了 
-			if (a[i] &lt; a[j]) {
-				cnt++;					
-				ans[cnt] = a[l];
-				l++;
-			} else {
-				cnt++;
-				ans[cnt] = a[r];
-				r--;
-			}
-		} else {
-			//其他的更新都不难了 
-			if (a[l] &lt; a[r]) {
-				cnt++;
-				ans[cnt] = a[l];
-				l++;
-			} else {
-				cnt++;
-				ans[cnt] = a[r];
-				r--;
+	int t = n;
+	while(t--) {
+		int m;
+		cin &gt;&gt; m;
+		string a,b;
+		int c;
+		for (int i = 1;i &lt;= m;i++) {
+			cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+			//记录 
+			mp[b][a] += c;
+		} 
+		for (map&lt;string,map&lt;string,int&gt; &gt;::iterator it = mp.begin();it != mp.end();it++) {
+			cout &lt;&lt; it-&gt;first &lt;&lt; endl; 
+			//用一个map接收it-&gt;second 
+			map&lt;string,int&gt; mp2 = it-&gt;second;
+			for (map&lt;string,int&gt;::iterator it2 = mp2.begin();it2 != mp2.end();it2++) {
+				cout &lt;&lt; &quot;   |----&quot; &lt;&lt; it2-&gt;first &lt;&lt; &quot;(&quot; &lt;&lt; it2-&gt;second &lt;&lt; &quot;)&quot; &lt;&lt; endl;
 			}
 		}
-	}
-	//奇怪的输出要求 
-	for (int i = 1;i &lt;= n;i++) {
-		if (i % 80 == 0) {
-			cout &lt;&lt; ans[i] &lt;&lt; endl;
-		} else {
-			cout &lt;&lt; ans[i];
+		//注意题目要求 
+		if (t != 0) {
+			cout &lt;&lt; endl;
 		}
+		mp.clear();
 	}
-	cout &lt;&lt; endl;
 	return 0;
 }
 
@@ -695,7 +661,7 @@ int main () {
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/" title="题解 [POJ 3617]Best Cow Line">https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/</a>
+      <a href="https://norman6666.github.io/post/ti-jie-hdu-1263shui-guo/" title="题解 [HDU 1263]水果">https://norman6666.github.io/post/ti-jie-hdu-1263shui-guo/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -711,14 +677,14 @@ int main () {
     <div class="nav-prev">
       
         <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="题解 [HDU 4864]Task" href="https://norman6666.github.io/post/ti-jie-hdu-4864task/">题解 [HDU 4864]Task</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="题解 [HDU 4864]Task" href="https://norman6666.github.io/post/ti-jie-hdu-4864task/">上一篇</a>
+        <a class="nav-pc-next" title="题解 [HDU 2275]Kiki &amp; Little Kiki 1" href="https://norman6666.github.io/post/ti-jie-hdu-2275kiki-and-little-kiki-1/">题解 [HDU 2275]Kiki &amp; Little Kiki 1</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="题解 [HDU 2275]Kiki &amp; Little Kiki 1" href="https://norman6666.github.io/post/ti-jie-hdu-2275kiki-and-little-kiki-1/">上一篇</a>
       
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="题解 [POJ 1328]Radar Installation" href="https://norman6666.github.io/post/ti-jie-poj-1328radar-installation/">题解 [POJ 1328]Radar Installation</a>
-        <a class="nav-mobile-next" title="题解 [POJ 1328]Radar Installation" href="https://norman6666.github.io/post/ti-jie-poj-1328radar-installation/">下一篇</a>
+        <a class="nav-pc-next" title="题解 [T4030]行列快乐值" href="https://norman6666.github.io/post/ti-jie-t4030xing-lie-kuai-le-zhi/">题解 [T4030]行列快乐值</a>
+        <a class="nav-mobile-next" title="题解 [T4030]行列快乐值" href="https://norman6666.github.io/post/ti-jie-t4030xing-lie-kuai-le-zhi/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
