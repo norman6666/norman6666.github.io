@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://norman6666.github.io</id>
     <title>Norman的Little_blog</title>
-    <updated>2021-02-13T14:15:30.603Z</updated>
+    <updated>2021-02-13T14:31:02.331Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://norman6666.github.io"/>
     <link rel="self" href="https://norman6666.github.io/atom.xml"/>
@@ -363,8 +363,8 @@ int main () {
     </entry>
     <entry>
         <title type="html"><![CDATA[题解 [CodeForces - 447D]DZY Loves Modification]]></title>
-        <id>https://norman6666.github.io/post/ti-jie-t4030xing-lie-kuai-le-zhi/</id>
-        <link href="https://norman6666.github.io/post/ti-jie-t4030xing-lie-kuai-le-zhi/">
+        <id>https://norman6666.github.io/post/ti-jie-codeforces447ddzylovesmodification/</id>
+        <link href="https://norman6666.github.io/post/ti-jie-codeforces447ddzylovesmodification/">
         </link>
         <updated>2021-02-10T12:04:24.000Z</updated>
         <content type="html"><![CDATA[<h2 id="题解-codeforces-447ddzy-loves-modification">题解 [CodeForces - 447D]DZY Loves Modification</h2>
