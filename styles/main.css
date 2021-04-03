@@ -2119,11 +2119,11 @@ body {
       }.nav-item a:hover {
         color: #222;
       }.nav-item-active {
-      background: #ced4dafe;
+      background: #e9eceffe;
     }
 
     .nav-item:hover {
-      background: #ced4dafe;
+      background: #e9eceffe;
       color: rgba(0, 0, 0, 0.98);
     }.site-author-image {
       border-radius: 50%;
