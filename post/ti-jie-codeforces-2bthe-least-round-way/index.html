@@ -8,7 +8,7 @@
 <meta name="keywords" content="Norman的小博客">
 <meta name="description" content="生活没有一劳永逸，想要不被抛弃，必须自己争气。">
 <meta name="theme-color" content="#000">
-<title>关于 | Norman的Little_blog</title>
+<title>题解 [Codeforces 2B]The least round way | Norman的Little_blog</title>
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/favicon.ico?v=1617453762239">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/css/pisces.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/fonts/font-awesome.css">
@@ -48,8 +48,8 @@
 </script>
 
 
-  <meta name="description" content="关于" />
-  <meta name="keywords" content="" />
+  <meta name="description" content="题解 [Codeforces 2B]The least round way" />
+  <meta name="keywords" content="题解" />
 </head>
 
 <body>
@@ -276,10 +276,12 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+<li><a href="#%E9%A2%98%E8%A7%A3-codeforces-2bthe-least-round-way">题解 [Codeforces 2B]The least round way</a>
+<ul>
+<li><a href="#%E6%96%B9%E6%B3%95%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">方法：动态规划</a></li>
+</ul>
+</li>
+<li><a href="#code">Code:</a></li>
 </ul>
 </li>
 </ul>
@@ -547,8 +549,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://norman6666.github.io/post/about/">
-      关于
+    <a class="post-title-link" href="https://norman6666.github.io/post/ti-jie-codeforces-2bthe-least-round-way/">
+      题解 [Codeforces 2B]The least round way
     </a>
   </h1>
   <div class="post-meta">
@@ -556,23 +558,36 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2019-01-25 19:09:48">2019-01-25</span>
+      <span class="publish-time" data-t="2021-04-03 20:42:28">2021-04-03</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show language" data-lan="category-in">分类于</span>
+      
+      
+      <a href="https://norman6666.github.io/tag/EHu5NeZAD/">
+        <span>题解</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1<span class="language" data-lan="minute">分钟</span></span>
+      <span>5<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>53<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>835<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
     
     
-    <span id="/post/about/" data-flag-title="关于" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/ti-jie-codeforces-2bthe-least-round-way/" data-flag-title="题解 [Codeforces 2B]The least round way" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span><span class="language" data-lan="view">浏览量</span>：<span class="leancloud-visitors-count"></span></span>
@@ -581,21 +596,189 @@
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<p>一个博客。</p>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<p>一个初二OIer，理科生，文科渣渣。</p>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<p>编程，打游戏。</p>
-<h2 id="联系我呀">📬 联系我呀</h2>
-<p>QQ:<br>
-<img src="https://i.bmp.ovh/imgs/2021/02/2129554e684b3121.png" alt="" loading="lazy"></p>
+              <h2 id="题解-codeforces-2bthe-least-round-way">题解 [Codeforces 2B]The least round way</h2>
+<h3 id="方法动态规划">方法：动态规划</h3>
+<p>这题我们可以用动态规划解决。</p>
+<p>既然让我们走过的路程的乘积的后缀 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 最小，产生后缀 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 方法共有：</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mo>∗</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">2 * 5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span>，即产生的后缀 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 个数为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>c</mi><mi>n</mi><msub><mi>t</mi><mn>2</mn></msub><mo separator="true">,</mo><mi>c</mi><mi>n</mi><msub><mi>t</mi><mn>5</mn></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">min(cnt_2,cnt_5)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>。</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>，即产生的后缀 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 只有一个。</li>
+</ul>
+<p>我们用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><msub><mi>p</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo separator="true">,</mo><mn>0</mn></mrow></msub></mrow><annotation encoding="application/x-tex">dp_{i,j,0}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">d</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mpunct mtight">,</span><span class="mord mtight">0</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 表示到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i,j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 位置最少 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span> 因子的个数， <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><msub><mi>p</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo separator="true">,</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">dp_{i,j,1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">d</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mpunct mtight">,</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 表示到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i,j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 位置最少 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span> 因子的个数。</p>
+<p>如果 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>c</mi><mi>n</mi><msub><mi>t</mi><mn>2</mn></msub><mo separator="true">,</mo><mi>c</mi><mi>n</mi><msub><mi>t</mi><mn>5</mn></msub><mo>)</mo><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">min(cnt_2,cnt_5) &gt; 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>，且有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>，那我们直接走 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 的路即可，因为此时后缀 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 的个数最小一定是 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>。</p>
+<p>其他就老老实实走最小的路就行了。</p>
+<p>注意，当没 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 的时候 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>c</mi><mi>n</mi><msub><mi>t</mi><mn>2</mn></msub><mo separator="true">,</mo><mi>c</mi><mi>n</mi><msub><mi>t</mi><mn>5</mn></msub><mo>)</mo><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">min(cnt_2,cnt_5) = 0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 时，答案为一。</p>
+<p>具体见代码。</p>
+<h2 id="code">Code:</h2>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+using namespace std;
+//考虑unsigned long long
+typedef long long ll;
+inline int read(){
+	int z=0,x=1;char c=getchar();
+	while(c&gt;'9'||c&lt;'0'){if(c=='-') x=-x; c=getchar();}
+	while(c&gt;='0'&amp;&amp;c&lt;='9') z=z*10+c-'0',c=getchar();
+	return z*x;
+}
+inline void write(ll x){
+    if(x&lt;0) putchar('-'),x=-x;
+    if(x&gt;9) write(x/10);
+    putchar(x%10+'0');
+}
+
+const int INF = 100000000;
+const int N = 1010;
+int a[N][N];
+int b[N][N][2]; 
+int dp[N][N][2];
+int main () {
+	int n = read();
+	int c = -1;
+	for (int i = 1;i &lt;= n;i++) {
+		for (int j = 1;j &lt;= n;j++) {
+			a[i][j] = read();
+			int op = a[i][j];
+			//记录零的位置和标记非法位置 
+			if (op == 0) {
+				c = i;
+				b[i][j][0] = b[i][j][1] = INF;
+				continue;
+			} 
+			//记录 2 因子个数 
+			while (op % 2 == 0) {
+				op /= 2;
+				b[i][j][0]++;
+			}
+			//记录 5 因子个数 
+			op = a[i][j];
+			while (op % 5 == 0) {
+				op /= 5;
+				b[i][j][1]++;
+			}
+		}
+	} 
+	//边界初始化 
+	for (int i = 1;i &lt;= n;i++) {
+		dp[i][0][0] = dp[i][0][1] = dp[0][i][0] = dp[0][i][1] = INF;
+	}
+	//dp初始化话 
+	dp[1][1][0] = b[1][1][0],dp[1][1][1] = b[1][1][1];
+	for(int i = 1;i &lt;= n;i++) {
+		for (int j = 1;j &lt;= n;j++) {
+			if (i == 1 &amp;&amp; j == 1) {
+				continue;
+			} 
+			//比较 2 因子的个数，记得加上此地方 2 因子的个数 
+			if (dp[i - 1][j][0] &lt; dp[i][j - 1][0]) {
+				dp[i][j][0] = dp[i - 1][j][0] + b[i][j][0]; 
+			} else {
+				dp[i][j][0] = dp[i][j - 1][0] + b[i][j][0];
+			}
+			//比较 5 因子的个数，记得加上此地方 5 因子的个数 
+			if (dp[i - 1][j][1] &lt; dp[i][j - 1][1]) {
+				dp[i][j][1] = dp[i - 1][j][1] + b[i][j][1]; 
+			} else {
+				dp[i][j][1] = dp[i][j - 1][1] + b[i][j][1];
+			}
+		}
+	} 
+	string ans;
+	int k = -1;
+	//k 记录那个更小 
+	if (dp[n][n][0] &lt; dp[n][n][1]) {
+		k = 0;
+	} else {
+		k = 1;
+	}
+	//能直接走零 
+	if (c != -1 &amp;&amp; dp[n][n][k] &gt; 0) {
+		puts(&quot;1&quot;);
+		for (int i = 1;i &lt; c;i++) {
+			printf(&quot;D&quot;);
+		}
+		for (int i = 1;i &lt; n;i++) {
+			printf(&quot;R&quot;);
+		}
+		for (int i = c;i &lt; n;i++) {
+			printf(&quot;D&quot;);
+		}
+		return 0;
+	}
+	int x = n,y = n;
+	while (true) { 
+		//哪边小往哪边走 
+		if (dp[x - 1][y][k] &lt; dp[x][y - 1][k]) {
+			x--;
+			ans += 'D';
+		} else {
+			y--;
+			ans += 'R';
+		}
+	 	if (x == 1) {
+			for (int i = 1;i &lt; y;i++) {
+				ans += 'R';
+			}
+			break;
+		}
+		if (y == 1) {
+			for (int i = 1;i &lt; x;i++) {
+				ans += 'D';
+			}
+			break;
+		}	
+	}
+	//特判 
+	if (c == -1 &amp;&amp; dp[n][n][k] == 0) {
+		printf(&quot;0\n&quot;);
+	} else {
+		printf(&quot;%d\n&quot;,dp[n][n][k]);
+	}
+	//倒序输出 
+	for (int i = ans.length() - 1;i &gt;= 0;i--) {
+		printf(&quot;%c&quot;,ans[i]);
+	}
+	return 0;
+}
+
+</code></pre>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>h</mi><mi>e</mi><mtext> </mtext><mi>e</mi><mi>n</mi><mi>d</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">The\ end.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mspace"> </span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord">.</span></span></span></span></p>
 
             </div>
             
+            
+              <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong class="language" data-lan="author">本文作者：</strong>
+      Norman
+    </li>
+    <li class="post-copyright-link">
+      <strong class="language" data-lan="link">本文链接：</strong>
+      <a href="https://norman6666.github.io/post/ti-jie-codeforces-2bthe-least-round-way/" title="题解 [Codeforces 2B]The least round way">https://norman6666.github.io/post/ti-jie-codeforces-2bthe-least-round-way/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong class="language" data-lan="copyright">版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+      <a href="https://norman6666.github.io/tag/EHu5NeZAD/"># 题解</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="题解 [POJ 1742]Coins" href="https://norman6666.github.io/post/ti-jie-poj-1742coins/">题解 [POJ 1742]Coins</a>
+        <a class="nav-mobile-next" title="题解 [POJ 1742]Coins" href="https://norman6666.github.io/post/ti-jie-poj-1742coins/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
+</div>
             
             
   <script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
