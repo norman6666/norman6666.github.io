@@ -8,7 +8,7 @@
 <meta name="keywords" content="Norman的小博客">
 <meta name="description" content="生活没有一劳永逸，想要不被抛弃，必须自己争气。">
 <meta name="theme-color" content="#000">
-<title>题解 [POJ 1328]Radar Installation | Norman的Little_blog</title>
+<title>题解 [UVA 1626 括号序列]/[POJ 1141] Brackets sequence | Norman的Little_blog</title>
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/favicon.ico?v=1617461503680">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/css/pisces.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/fonts/font-awesome.css">
@@ -48,7 +48,7 @@
 </script>
 
 
-  <meta name="description" content="题解 [POJ 1328]Radar Installation" />
+  <meta name="description" content="题解 [UVA 1626 括号序列]/[POJ 1141] Brackets sequence" />
   <meta name="keywords" content="题解" />
 </head>
 
@@ -276,9 +276,9 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E9%A2%98%E8%A7%A3-poj-1328radar-installation">题解 [POJ 1328]Radar Installation</a>
+<li><a href="#%E9%A2%98%E8%A7%A3-uva-1626-%E6%8B%AC%E5%8F%B7%E5%BA%8F%E5%88%97poj-1141-brackets-sequence">题解 [UVA 1626 括号序列]/[POJ 1141] Brackets sequence</a>
 <ul>
-<li><a href="#%E6%96%B9%E6%B3%95%E8%B4%AA%E5%BF%83">方法：贪心</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E5%8C%BA%E9%97%B4%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">方法：区间动态规划</a></li>
 </ul>
 </li>
 <li><a href="#code">Code:</a></li>
@@ -549,8 +549,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://norman6666.github.io/post/ti-jie-poj-1328radar-installation/">
-      题解 [POJ 1328]Radar Installation
+    <a class="post-title-link" href="https://norman6666.github.io/post/ti-jie-uva-1626-gua-hao-xu-lie-poj-1141-brackets-sequence/">
+      题解 [UVA 1626 括号序列]/[POJ 1141] Brackets sequence
     </a>
   </h1>
   <div class="post-meta">
@@ -558,7 +558,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-02-07 22:35:41">2021-02-07</span>
+      <span class="publish-time" data-t="2021-04-03 22:51:17">2021-04-03</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -577,17 +577,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>4<span class="language" data-lan="minute">分钟</span></span>
+      <span>5<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>648<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>815<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
     
     
-    <span id="/post/ti-jie-poj-1328radar-installation/" data-flag-title="题解 [POJ 1328]Radar Installation" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/ti-jie-uva-1626-gua-hao-xu-lie-poj-1141-brackets-sequence/" data-flag-title="题解 [UVA 1626 括号序列]/[POJ 1141] Brackets sequence" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span><span class="language" data-lan="view">浏览量</span>：<span class="leancloud-visitors-count"></span></span>
@@ -596,37 +596,50 @@
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <h2 id="题解-poj-1328radar-installation">题解 [POJ 1328]Radar Installation</h2>
-<p><a href="https://vjudge.net/problem/POJ-1328">vjudge链接</a></p>
-<h3 id="方法贪心">方法：贪心</h3>
-<p>这题我们用贪心解决。</p>
-<p>我们可以将题意转换一下，对于一个二维坐标，记录能满足在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 轴放雷达的最小位置和最大位置，原题意就转换成了给你一些线段，求用最少的点覆盖所有的线段的点数，即每个线段上都至少要有一个点。</p>
-<p>最小位置和最大位置的求法：</p>
-<p>利用勾股定理：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>=</mo><mi>x</mi><mo>−</mo><msqrt><mrow><msup><mi>d</mi><mn>2</mn></msup><mo>−</mo><msup><mi>y</mi><mn>2</mn></msup></mrow></msqrt><mo separator="true">,</mo><mi>r</mi><mo>=</mo><mi>x</mi><mo>+</mo><msqrt><mrow><msup><mi>d</mi><mn>2</mn></msup><mo>−</mo><msup><mi>y</mi><mn>2</mn></msup></mrow></msqrt><mo>(</mo><mi>d</mi><mo>≥</mo><mi>y</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">l = x - \sqrt{d^{2} - y^{2}},r = x + \sqrt{d^{2} - y^{2}}(d ≥ y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.24em;vertical-align:-0.2821659999999999em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9578340000000001em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span style="top:-2.917834em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg width='400em' height='1.28em' viewBox='0 0 400000 1296' preserveAspectRatio='xMinYMin slice'><path d='M263,681c0.7,0,18,39.7,52,119c34,79.3,68.167,
-158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120c340,-704.7,510.7,-1060.3,512,-1067
-c4.7,-7.3,11,-11,19,-11H40000v40H1012.3s-271.3,567,-271.3,567c-38.7,80.7,-84,
-175,-136,283c-52,108,-89.167,185.3,-111.5,232c-22.3,46.7,-33.8,70.3,-34.5,71
-c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1s-109,-253,-109,-253c-72.7,-168,-109.3,
--252,-110,-252c-10.7,8,-22,16.7,-34,26c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26
-s76,-59,76,-59s76,-60,76,-60z M1001 80H40000v40H1012z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2821659999999999em;"><span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.24em;vertical-align:-0.2821659999999999em;"></span><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.9578340000000001em;"><span class="svg-align" style="top:-3.2em;"><span class="pstrut" style="height:3.2em;"></span><span class="mord" style="padding-left:1em;"><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span style="top:-2.917834em;"><span class="pstrut" style="height:3.2em;"></span><span class="hide-tail" style="min-width:1.02em;height:1.28em;"><svg width='400em' height='1.28em' viewBox='0 0 400000 1296' preserveAspectRatio='xMinYMin slice'><path d='M263,681c0.7,0,18,39.7,52,119c34,79.3,68.167,
-158.7,102.5,238c34.3,79.3,51.8,119.3,52.5,120c340,-704.7,510.7,-1060.3,512,-1067
-c4.7,-7.3,11,-11,19,-11H40000v40H1012.3s-271.3,567,-271.3,567c-38.7,80.7,-84,
-175,-136,283c-52,108,-89.167,185.3,-111.5,232c-22.3,46.7,-33.8,70.3,-34.5,71
-c-4.7,4.7,-12.3,7,-23,7s-12,-1,-12,-1s-109,-253,-109,-253c-72.7,-168,-109.3,
--252,-110,-252c-10.7,8,-22,16.7,-34,26c-22,17.3,-33.3,26,-34,26s-26,-26,-26,-26
-s76,-59,76,-59s76,-60,76,-60z M1001 80H40000v40H1012z'/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.2821659999999999em;"><span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>。</p>
-<p>当 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mo>&lt;</mo><mi>y</mi></mrow><annotation encoding="application/x-tex">d &lt; y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>，这个坐标一定不会扫到，我们这时就可以记录无解了。</p>
-<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/image_hosting/tt9blhxs.png" alt="" loading="lazy"></figure>
-<p>用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>o</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">now</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span> 表示此时处理到的位置，用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>n</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">ans</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span></span></span></span> 记录答案。</p>
-<p>按右端点排序后，将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>o</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">now</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span> 初始值为第一个的右端点，这样一定能覆盖到第一个坐标。</p>
-<figure data-type="image" tabindex="2"><img src="https://cdn.luogu.com.cn/upload/image_hosting/3oitiive.png" alt="" loading="lazy"></figure>
-<p>初始化时 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>o</mi><mi>w</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">now = 3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">3</span></span></span></span>，那么我们的 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mi mathvariant="normal">、</mi><mn>2</mn><mi mathvariant="normal">、</mi><mn>3</mn><mi mathvariant="normal">、</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">1、2、3、4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord cjk_fallback">、</span><span class="mord">2</span><span class="mord cjk_fallback">、</span><span class="mord">3</span><span class="mord cjk_fallback">、</span><span class="mord">4</span></span></span></span> 都可以被覆盖到，我们接下来枚举到第一个左端点大于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>o</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">now</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span> 的位置停止（样例中的位置为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn></mrow><annotation encoding="application/x-tex">5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">5</span></span></span></span>），更新 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi>o</mi><mi>w</mi></mrow><annotation encoding="application/x-tex">now</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mi>n</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">ans</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span></span></span></span> 加一，如此这样循环。</p>
+              <h2 id="题解-uva-1626-括号序列poj-1141-brackets-sequence">题解 [UVA 1626 括号序列]/[POJ 1141] Brackets sequence</h2>
+<h3 id="方法区间动态规划">方法：区间动态规划</h3>
+<p>这题我们可以用区间动态规划解决。</p>
+<p>首先吐槽一下这个输入方式，害人不浅啊。</p>
+<p>进入正题：</p>
+<p>我们用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">dp[i][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span> 来表示 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 区间中变为合法括号序列添加的最少括号。</p>
+<p>那么每一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">dp[i][i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 的值一开始必须为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>，因为一个括号必须需要另一个括号才能匹配。</p>
+<p>状态转移式子：</p>
+<ul>
+<li>如果此时 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>[</mo><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">a[i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span> 与 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">a[j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span> 匹配，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo separator="true">,</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>+</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">dp[i][j] = min(dp[i][j],dp[i + 1][j - 1])</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span>。</li>
+<li>如不匹配则 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo>=</mo><mo>(</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>x</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><msub><mo>)</mo><mrow><mi>m</mi><mi>i</mi><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">dp[i][j] = (dp[i][x] + dp[x + 1][j])_{min}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">x</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">m</span><span class="mord mathdefault mtight">i</span><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>i</mi><mo>≤</mo><mi>x</mi><mo>&lt;</mo><mi>j</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(i ≤ x &lt; j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span>。</li>
+</ul>
+<p>同时我们用一个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi><mi>o</mi></mrow><annotation encoding="application/x-tex">go</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">o</span></span></span></span> 数组来记录 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i,j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 区间的最佳 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>，即 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>x</mi><mo>]</mo><mo>+</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>x</mi><mo>+</mo><mn>1</mn><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">dp[i][x] + dp[x + 1][j]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault">x</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span></span></span></span> 取最小值时。特别地，当他们匹配时 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi><mi>o</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>[</mo><mi>j</mi><mo>]</mo><mo>=</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">go[i][j] = -1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">o</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">−</span><span class="mord">1</span></span></span></span>。</p>
+<p>输出结果通过函数 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>o</mi><mi>u</mi><mi>t</mi><mi>p</mi><mi>u</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">output</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80952em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span><span class="mord mathdefault">p</span><span class="mord mathdefault">u</span><span class="mord mathdefault">t</span></span></span></span> 来实现：</p>
+<pre><code class="language-c++">void out_put(int i,int j) {
+	if (i &gt; j) {
+		//非法的时候 
+		return;
+	} else if (i == j) {
+		//当仅剩自己这一个括号时，直接输出一整对括号 
+		if (a[i] == '[' || a[i] == ']') {
+			printf(&quot;[]&quot;);
+		} else {
+			printf(&quot;()&quot;);
+		}
+		return;
+	} else if (go[i][j] == -1) {
+		//匹配时 
+		printf(&quot;%c&quot;,a[i]);
+		//往里缩 
+		out_put(i + 1,j - 1);
+		printf(&quot;%c&quot;,a[j]);
+		return;
+	} else {
+		//分点处理 
+		out_put(i,go[i][j]);
+		out_put(go[i][j] + 1,j);
+		return;
+	}
+}
+</code></pre>
 <p>具体见代码。</p>
-<p><a href="https://vjudge.net/solution/29625159">AC记录</a></p>
 <h2 id="code">Code:</h2>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;cmath&gt;
-#include&lt;algorithm&gt;
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 //考虑unsigned long long
 typedef long long ll;
@@ -636,60 +649,90 @@ inline int read(){
 	while(c&gt;='0'&amp;&amp;c&lt;='9') z=z*10+c-'0',c=getchar();
 	return z*x;
 }
-const int N = 1010;
+inline void write(ll x){
+    if(x&lt;0) putchar('-'),x=-x;
+    if(x&gt;9) write(x/10);
+    putchar(x%10+'0');
+}
+const int N = 110;
+int dp[N][N],go[N][N]; 
+string a;
 
-struct node {
-	double x,y;
-}a[N],b[N];
+bool check(char a,char b) {
+	if ((a == '[' &amp;&amp; b == ']') || (a == '(' &amp;&amp; b == ')')) {
+		return true;
+	}
+	return false;
+}
 
-bool cmp (node a,node b) {
-	return a.y &lt; b.y;
+void out_put(int i,int j) {
+	if (i &gt; j) {
+		//非法的时候 
+		return;
+	} else if (i == j) {
+		//当仅剩自己这一个括号时，直接输出一整对括号 
+		if (a[i] == '[' || a[i] == ']') {
+			printf(&quot;[]&quot;);
+		} else {
+			printf(&quot;()&quot;);
+		}
+		return;
+	} else if (go[i][j] == -1) {
+		//匹配时 
+		printf(&quot;%c&quot;,a[i]);
+		//往里缩 
+		out_put(i + 1,j - 1);
+		printf(&quot;%c&quot;,a[j]);
+		return;
+	} else {
+		//分点处理 
+		out_put(i,go[i][j]);
+		out_put(go[i][j] + 1,j);
+		return;
+	}
 }
 
 int main () {
-	std::ios::sync_with_stdio(false);
-	int n,d;
-	int t = 0;
-	while (true) {
-		cin &gt;&gt; n &gt;&gt; d;
-		if (n == 0 &amp;&amp; d == 0) {
-			break;
-		}
-		t++;
-		int cnt = 0;
-		bool _ = true;
-		for (int i = 1;i &lt;= n;i++) {
-			cin &gt;&gt; a[i].x &gt;&gt; a[i].y;
-			//覆盖不到，y &gt; d
-			if (abs(a[i].y) &gt; d) {
-				_ = false;
-				continue;
-			}
-			//记录左端点和右端点 
-			cnt++;
-			b[cnt].x = a[i].x - sqrt(pow(d,2.0) - pow(a[i].y,2.0));
-			b[cnt].y = a[i].x + sqrt(pow(d,2.0) - pow(a[i].y,2.0));
-		}
-		//无法覆盖 
-		if (_ == false) {
-			cout &lt;&lt; &quot;Case &quot; &lt;&lt; t &lt;&lt; &quot;: -1&quot; &lt;&lt; endl;
+	int t;
+	scanf(&quot;%d&quot;,&amp;t);
+	getchar();
+	while (t--) {
+		//初始化 
+		memset(dp,0,sizeof(dp));
+		memset(go,0,sizeof(go));
+		getline(cin, a);
+		getline(cin, a);
+		int n = a.size();
+		if (n == 0) {
+			puts(&quot;\n&quot;);
 			continue;
-		} 
-		//按右端点排序 
-		sort(b+1,b+1+cnt,cmp);
-		//初始值now 
-		double now = b[1].y;
-		int ans = 1;
-		for (int i = 2;i &lt;= cnt;i++) {
-			//允许的一个误差1e-8，左端点大于now时 
-			if (b[i].x - now &gt; 1e-8) {
-				//更新 
-				now = b[i].y;
-				ans++;
+		}
+		//初始化 dp 
+		for (int i = 0;i &lt; n;i++) {
+			dp[i][i] = 1;
+		}
+		//状态转移 
+		for (int i = n - 2;i &gt;= 0;i--) {
+			for (int j = i + 1;j &lt; n;j++) {
+				dp[i][j] = n;
+				if (check(a[i],a[j]) == true) {
+					dp[i][j] = min(dp[i][j],dp[i + 1][j - 1]); 
+					go[i][j] = -1;
+				}
+				for (int x = i;x &lt; j;x++) {
+					if (dp[i][j] &gt; (dp[i][x] + dp[x + 1][j])) {
+						dp[i][j] = dp[i][x] + dp[x + 1][j];
+						go[i][j] = x;
+					}
+				}
 			}
 		}
 		//输出 
-		cout &lt;&lt; &quot;Case &quot; &lt;&lt; t &lt;&lt; &quot;: &quot; &lt;&lt; ans &lt;&lt; endl;
+		out_put(0,n - 1);
+		printf(&quot;\n&quot;);
+        if (t) {
+			printf(&quot;\n&quot;);
+		}
 	}
 	return 0;
 }
@@ -708,7 +751,7 @@ int main () {
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://norman6666.github.io/post/ti-jie-poj-1328radar-installation/" title="题解 [POJ 1328]Radar Installation">https://norman6666.github.io/post/ti-jie-poj-1328radar-installation/</a>
+      <a href="https://norman6666.github.io/post/ti-jie-uva-1626-gua-hao-xu-lie-poj-1141-brackets-sequence/" title="题解 [UVA 1626 括号序列]/[POJ 1141] Brackets sequence">https://norman6666.github.io/post/ti-jie-uva-1626-gua-hao-xu-lie-poj-1141-brackets-sequence/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -723,15 +766,11 @@ int main () {
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="题解 [POJ 3617]Best Cow Line" href="https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/">题解 [POJ 3617]Best Cow Line</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="题解 [POJ 3617]Best Cow Line" href="https://norman6666.github.io/post/ti-jie-poj-3617best-cow-line/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="题解 [CodeForces - 888E]Maximum Subsequence" href="https://norman6666.github.io/post/ti-jie-codeforces-888emaximum-subsequence/">题解 [CodeForces - 888E]Maximum Subsequence</a>
-        <a class="nav-mobile-next" title="题解 [CodeForces - 888E]Maximum Subsequence" href="https://norman6666.github.io/post/ti-jie-codeforces-888emaximum-subsequence/">下一篇</a>
+        <a class="nav-pc-next" title="题解 [Codeforces 2B]The least round way" href="https://norman6666.github.io/post/ti-jie-codeforces-2bthe-least-round-way/">题解 [Codeforces 2B]The least round way</a>
+        <a class="nav-mobile-next" title="题解 [Codeforces 2B]The least round way" href="https://norman6666.github.io/post/ti-jie-codeforces-2bthe-least-round-way/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
