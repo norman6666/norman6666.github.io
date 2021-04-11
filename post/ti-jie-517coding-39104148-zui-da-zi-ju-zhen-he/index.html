@@ -8,7 +8,7 @@
 <meta name="keywords" content="Norman的小博客">
 <meta name="description" content="生活没有一劳永逸，想要不被抛弃，必须自己争气。">
 <meta name="theme-color" content="#000">
-<title>题解 [HDU 2275]Kiki &amp; Little Kiki 1 | Norman的Little_blog</title>
+<title>题解 [517coding 3910/4148] 最大子矩阵和 | Norman的Little_blog</title>
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/favicon.ico?v=1618125536764">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/css/pisces.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/norman6666/norman6666.github.io@master/media/fonts/font-awesome.css">
@@ -48,8 +48,8 @@
 </script>
 
 
-  <meta name="description" content="题解 [HDU 2275]Kiki & Little Kiki 1" />
-  <meta name="keywords" content="题解" />
+  <meta name="description" content="题解 [517coding 3910/4148] 最大子矩阵和" />
+  <meta name="keywords" content="" />
 </head>
 
 <body>
@@ -276,9 +276,9 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E9%A2%98%E8%A7%A3-hdu-2275kiki-little-kiki-1">题解 [HDU 2275]Kiki &amp; Little Kiki 1</a>
+<li><a href="#%E9%A2%98%E8%A7%A3-517coding-39104148-%E6%9C%80%E5%A4%A7%E5%AD%90%E7%9F%A9%E9%98%B5%E5%92%8C">题解 [517coding 3910/4148] 最大子矩阵和</a>
 <ul>
-<li><a href="#%E6%96%B9%E6%B3%95stl_multiset">方法：STL_multiset</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92">方法：动态规划</a></li>
 </ul>
 </li>
 <li><a href="#code">Code:</a></li>
@@ -549,8 +549,8 @@
           <div class="section bg-color post post-page">
             <section class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://norman6666.github.io/post/ti-jie-hdu-2275kiki-and-little-kiki-1/">
-      题解 [HDU 2275]Kiki &amp; Little Kiki 1
+    <a class="post-title-link" href="https://norman6666.github.io/post/ti-jie-517coding-39104148-zui-da-zi-ju-zhen-he/">
+      题解 [517coding 3910/4148] 最大子矩阵和
     </a>
   </h1>
   <div class="post-meta">
@@ -558,36 +558,23 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span class="language" data-lan="publish">发布于</span>
-      <span class="publish-time" data-t="2021-02-11 18:19:33">2021-02-11</span>
+      <span class="publish-time" data-t="2021-04-11 15:16:49">2021-04-11</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://norman6666.github.io/tag/EHu5NeZAD/">
-        <span>题解</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>2<span class="language" data-lan="minute">分钟</span></span>
+      <span>3<span class="language" data-lan="minute">分钟</span></span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>371<span class="pc-show language" data-lan="words">字数</span></span>
+      <span>505<span class="pc-show language" data-lan="words">字数</span></span>
     </span>
     
     
     
-    <span id="/post/ti-jie-hdu-2275kiki-and-little-kiki-1/" data-flag-title="题解 [HDU 2275]Kiki &amp; Little Kiki 1" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/ti-jie-517coding-39104148-zui-da-zi-ju-zhen-he/" data-flag-title="题解 [517coding 3910/4148] 最大子矩阵和" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span><span class="language" data-lan="view">浏览量</span>：<span class="leancloud-visitors-count"></span></span>
@@ -596,22 +583,18 @@
   </div>
 </section>
             <div class="post-body next-md-body" id="post_body">
-              <h2 id="题解-hdu-2275kiki-little-kiki-1">题解 [HDU 2275]Kiki &amp; Little Kiki 1</h2>
-<p><a href="https://vjudge.net/problem/HDU-2275">vjudge链接</a></p>
-<h3 id="方法stl_multiset">方法：STL_multiset</h3>
-<p>这题我们用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 解决就行了。</p>
-<p>主要是考察一些 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>m</mi><mi>u</mi><mi>l</mi><mi>t</mi><mi>i</mi><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">multiset</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">u</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> 的一些基本操作，注意不能用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>e</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">set</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.61508em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault">t</span></span></span></span> （会去重）。</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mi mathvariant="normal">.</mi><mi>i</mi><mi>n</mi><mi>s</mi><mi>e</mi><mi>r</mi><mi>t</mi><mo>(</mo><mi>y</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">x.insert(y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">x</span><span class="mord">.</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span> ：往 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 中插入 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>。</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi mathvariant="normal">.</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo>(</mo><mi>y</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">s.erase(y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>：从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 中删除所有 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span>。</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi mathvariant="normal">.</mi><mi>e</mi><mi>r</mi><mi>a</mi><mi>s</mi><mi>e</mi><mo>(</mo></mrow><annotation encoding="application/x-tex">s.erase(</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord">.</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">a</span><span class="mord mathdefault">s</span><span class="mord mathdefault">e</span><span class="mopen">(</span></span></span></span>迭代器<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>)</mo></mrow><annotation encoding="application/x-tex">)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mclose">)</span></span></span></span> ：从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span> 删除迭代器的位置。</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi mathvariant="normal">.</mi><mi>u</mi><mi>p</mi><mi>p</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">s.upper</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">s</span><span class="mord">.</span><span class="mord mathdefault">u</span><span class="mord mathdefault">p</span><span class="mord mathdefault">p</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>_ <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>d</mi><mo>(</mo><mi>y</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">bound(y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>：返回第一个大于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 的位置。</p>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi mathvariant="normal">.</mi><mi>l</mi><mi>o</mi><mi>w</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">s.lower</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord">.</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>_ <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi><mi>o</mi><mi>u</mi><mi>n</mi><mi>d</mi><mo>(</mo><mi>y</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">bound(y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault">o</span><span class="mord mathdefault">u</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>：返回第一个大于等于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi></mrow><annotation encoding="application/x-tex">y</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span></span></span></span> 的位置。</p>
-<p>查找不超过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span> 的最大数字，实际上就是查找第一个大于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span></span></span></span> 的位置的前一个位置上的数。</p>
+              <h2 id="题解-517coding-39104148-最大子矩阵和">题解 [517coding 3910/4148] 最大子矩阵和</h2>
+<h3 id="方法动态规划">方法：动态规划</h3>
+<p>这题我们可以用动态规划解决。</p>
+<p>我们枚举每列的两个下标 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>，表示原二维矩阵的最大子矩阵所在的列在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>。</p>
+<ul>
+<li>如果 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i = j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>，则最大子矩阵和为第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 行的最大字段和。</li>
+<li>如果 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mtext> </mtext><mo>!</mo><mo>=</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i\ != j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace"> </span><span class="mclose">!</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> ，已知最大子矩阵的行的范围，求列的范围；我们把从第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span> 行到第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span> 行的所有行相加，得到一个只有一行的一维数组，则该一维数组的最大子段和就是最大子矩阵和。</li>
+</ul>
+<p>而求一维数组的最大字段和，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>d</mi><mi>p</mi><mo>[</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>]</mo><mo>+</mo><mi>b</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo separator="true">,</mo><mi>b</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">dp[i] = max(dp[i - 1] + b[i],b[i])</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mclose">)</span></span></span></span>。</p>
 <p>具体见代码。</p>
-<p><a href="https://vjudge.net/solution/29654184">AC记录</a></p>
 <h2 id="code">Code:</h2>
-<pre><code class="language-cpp">#include&lt;iostream&gt;
-#include&lt;set&gt;
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
 using namespace std;
 //考虑unsigned long long
 typedef long long ll;
@@ -621,39 +604,59 @@ inline int read(){
 	while(c&gt;='0'&amp;&amp;c&lt;='9') z=z*10+c-'0',c=getchar();
 	return z*x;
 }
-multiset&lt;int&gt; x;
-char a[10];
-int main () {
-	int n;
-	while(~scanf(&quot;%d&quot;,&amp;n)) {
-		int b;
-		for (int i = 1;i &lt;= n;i++) {
-			scanf(&quot;%s %d&quot;,&amp;a,&amp;b);
-			if (a[1] == 'u') {
-				//插入 
-				x.insert(b);
-			} else {
-				//找到第一个大于 M 的位置 
-				multiset&lt;int&gt;::iterator it = x.upper_bound(b);
-				//如果不是第一个 
-				if (it != x.begin()) {
-					//左挪一位 
-					it--;
-					printf(&quot;%d\n&quot;,*it);
-					//删掉 
-					x.erase(it);
-				} else {
-					//没找到 
-					puts(&quot;No Element!&quot;);
-				}
-			}
-		} 
-		cout &lt;&lt; endl;
-		x.clear();
+inline void write(ll x){
+    if(x&lt;0) putchar('-'),x=-x;
+    if(x&gt;9) write(x/10);
+    putchar(x%10+'0');
+}
+const int N = 210;
+int a[N][N];
+int b[N],dp[N];
+
+//把矩阵 a 的第 i 行到第 j 行进行合并，并求出连续最大和
+int to_get(int i,int j,int n) {
+    //初始化
+	memset(b,0,sizeof(b));
+	memset(dp,0,sizeof(dp));
+    //合并至 b 数组
+	for (int k = i;k &lt;= j;k++) {
+		for (int l = 1;l &lt;= n;l++) {
+			b[l] += a[k][l];
+		}
 	}
-	return 0;
+    //len 表示 列数
+	int len = n;
+    //初始化
+	dp[1] = b[1];
+	for (int k = 2;k &lt;= len;k++) {
+		dp[k] = max(dp[k - 1] + b[k],b[k]);
+	}
+    //ans 取最大值
+	int ans = dp[1];
+	for (int k = 1;k &lt;= len;k++) {
+		ans = max(ans,dp[k]);
+	}
+	return ans;
 }
 
+int main () {
+	int n = read();
+	for (int i = 1;i &lt;= n;i++) {
+		for (int j = 1;j &lt;= n;j++) {
+			a[i][j] = read();
+		}
+	}
+	int mx = -0x3f3f3f3f;
+	for (int i = 1;i &lt;= n;i++) {
+		for (int j = i;j &lt;= n;j++) {
+            //取最大值
+			int op = to_get(i,j,n);
+			mx = max(mx,op); 
+		}
+	}
+	cout &lt;&lt; mx;
+	return 0;
+}
 </code></pre>
 <p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi><mi>h</mi><mi>e</mi><mtext> </mtext><mi>e</mi><mi>n</mi><mi>d</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">The\ end.</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault">h</span><span class="mord mathdefault">e</span><span class="mspace"> </span><span class="mord mathdefault">e</span><span class="mord mathdefault">n</span><span class="mord mathdefault">d</span><span class="mord">.</span></span></span></span></p>
 
@@ -668,7 +671,7 @@ int main () {
     </li>
     <li class="post-copyright-link">
       <strong class="language" data-lan="link">本文链接：</strong>
-      <a href="https://norman6666.github.io/post/ti-jie-hdu-2275kiki-and-little-kiki-1/" title="题解 [HDU 2275]Kiki &amp; Little Kiki 1">https://norman6666.github.io/post/ti-jie-hdu-2275kiki-and-little-kiki-1/</a>
+      <a href="https://norman6666.github.io/post/ti-jie-517coding-39104148-zui-da-zi-ju-zhen-he/" title="题解 [517coding 3910/4148] 最大子矩阵和">https://norman6666.github.io/post/ti-jie-517coding-39104148-zui-da-zi-ju-zhen-he/</a>
     </li>
     <li class="post-copyright-license">
       <strong class="language" data-lan="copyright">版权声明： </strong>
@@ -677,21 +680,15 @@ int main () {
   </ul>
   <div class="tags">
     
-      <a href="https://norman6666.github.io/tag/EHu5NeZAD/"># 题解</a>
-    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
-        <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="题解 [CodeForces - 527C]Glass Carving" href="https://norman6666.github.io/post/ti-jie-codeforces-527cglass-carving/">题解 [CodeForces - 527C]Glass Carving</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="题解 [CodeForces - 527C]Glass Carving" href="https://norman6666.github.io/post/ti-jie-codeforces-527cglass-carving/">上一篇</a>
-      
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="题解 [HDU 1263]水果" href="https://norman6666.github.io/post/ti-jie-hdu-1263shui-guo/">题解 [HDU 1263]水果</a>
-        <a class="nav-mobile-next" title="题解 [HDU 1263]水果" href="https://norman6666.github.io/post/ti-jie-hdu-1263shui-guo/">下一篇</a>
+        <a class="nav-pc-next" title="题解 [517coding 4105]最小的最长上升子序列" href="https://norman6666.github.io/post/ti-jie-517coding-4105zui-xiao-de-zui-chang-shang-sheng-zi-xu-lie/">题解 [517coding 4105]最小的最长上升子序列</a>
+        <a class="nav-mobile-next" title="题解 [517coding 4105]最小的最长上升子序列" href="https://norman6666.github.io/post/ti-jie-517coding-4105zui-xiao-de-zui-chang-shang-sheng-zi-xu-lie/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
