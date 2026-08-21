@@ -49,17 +49,64 @@ button { color: inherit; }
 .brand-row { gap: 12px; padding: 2px 8px 24px; }
 
 .brand-mark {
-  display: grid;
-  place-items: center;
+  position: relative;
   width: 46px;
   height: 46px;
+  flex: 0 0 auto;
+  overflow: hidden;
   border-radius: 17px;
-  color: #effbf6;
-  background: var(--navy);
-  font-family: 'STKaiti', 'KaiTi', serif;
-  font-size: 23px;
-  box-shadow: 0 12px 28px rgba(18, 55, 66, 0.2);
+  background:
+    radial-gradient(circle at 72% 18%, rgba(152, 215, 197, 0.18), transparent 34%),
+    linear-gradient(145deg, #0f303b, #185060);
+  box-shadow: 0 12px 28px rgba(18, 55, 66, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
+.circuit-mark::before,
+.circuit-mark::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  border-radius: 99px;
+  background: linear-gradient(90deg, rgba(152, 215, 197, 0.32), #a9e7d5, rgba(152, 215, 197, 0.32));
+}
+.circuit-mark::before { top: 22px; left: 7px; width: 32px; height: 1.5px; }
+.circuit-mark::after { top: 7px; left: 22px; width: 1.5px; height: 32px; }
+.circuit-core {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 2;
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #b7eadc;
+  border-radius: 6px;
+  background: #123742;
+  box-shadow: 0 0 0 3px rgba(152, 215, 197, 0.08), 0 0 16px rgba(152, 215, 197, 0.2);
+}
+.circuit-core::before,
+.circuit-core::after,
+.circuit-core i {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  background: #b7eadc;
+}
+.circuit-core::before { width: 3px; height: 3px; top: 3px; left: 3px; }
+.circuit-core::after { width: 3px; height: 3px; right: 3px; bottom: 3px; }
+.circuit-core i { width: 4px; height: 4px; top: 5.5px; left: 5.5px; box-shadow: 0 0 8px rgba(183, 234, 220, 0.7); }
+.circuit-node {
+  position: absolute;
+  z-index: 3;
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  background: #8dd4c0;
+  box-shadow: 0 0 7px rgba(141, 212, 192, 0.55);
+}
+.node-top { top: 5px; left: 20.5px; }
+.node-right { top: 20.5px; right: 5px; }
+.node-bottom { bottom: 5px; left: 20.5px; }
+.node-left { top: 20.5px; left: 5px; }
 
 .brand-row strong, .brand-row small, .doc-item strong, .doc-item small,
 .local-card strong, .local-card small { display: block; }
@@ -149,6 +196,19 @@ button { color: inherit; }
   border: 1px solid rgba(45, 140, 121, 0.15);
   border-radius: 20px;
   background: rgba(152, 215, 197, 0.18);
+}
+.developer-credit {
+  margin: 0 0 9px;
+  padding: 0 10px;
+  color: #8a9da1;
+  font-size: 9px;
+  letter-spacing: 0.11em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.developer-credit strong {
+  color: var(--mint-deep);
+  font-weight: 800;
 }
 .status-dot {
   width: 9px;

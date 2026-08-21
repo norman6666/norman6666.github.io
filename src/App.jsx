@@ -194,7 +194,13 @@ function App() {
     <main className="page-shell">
       <aside className="sidebar">
         <div className="brand-row">
-          <span className="brand-mark" aria-hidden="true">芯</span>
+          <span className="brand-mark circuit-mark" aria-hidden="true">
+            <span className="circuit-core"><i /></span>
+            <span className="circuit-node node-top" />
+            <span className="circuit-node node-right" />
+            <span className="circuit-node node-bottom" />
+            <span className="circuit-node node-left" />
+          </span>
           <div><strong>芯问</strong><small>Chip Manual AI</small></div>
         </div>
 
@@ -221,6 +227,8 @@ function App() {
             {!documents.length && <div className="empty-library">{online ? '还没有文档' : '连接后显示文档'}</div>}
           </div>
         </section>
+
+        <p className="developer-credit">Developed by <strong>ZTX</strong></p>
 
         <div className={`local-card ${online ? 'online' : health.status}`}>
           <span className="status-dot" aria-hidden="true" />
