@@ -7,11 +7,43 @@ const CHAT_HISTORY_KEY = 'xinwen_chat_history_v1'
 const PUBLIC_API_URL = (import.meta.env.VITE_PUBLIC_API_URL || '').replace(/\/$/, '')
 const PUBLIC_UPLOAD_LIMIT_MB = 30
 const MAX_SAVED_CHATS = 20
-const suggestions = [
+const suggestionPool = [
   'TIM1 怎么设置互补 PWM 和死区？',
   '这块开发板的晶振接在哪些引脚？',
   'ADC 的最大采样率是多少？',
+  'STM32F407 的启动模式怎么选择？',
+  '如何配置 SPI 的时钟极性和相位？',
+  'DMA 循环模式适合哪些场景？',
+  'NVIC 中断优先级应该怎么设置？',
+  'CAN 波特率需要配置哪些参数？',
+  'USB 功能对时钟有什么要求？',
+  '独立看门狗超时时间怎么计算？',
+  'USART 波特率寄存器怎么配置？',
+  'GPIO 复用功能应该怎么选择？',
+  'I²C 接口为什么需要上拉电阻？',
+  'PLL 怎样配置到 168 MHz？',
+  '提高主频后 Flash 等待周期怎么设置？',
+  '芯片的电源引脚应该怎样接电容？',
+  'ADC 扫描模式和连续模式有什么区别？',
+  '定时器编码器模式应该怎么配置？',
+  '这块开发板的按键和 LED 接在哪些引脚？',
 ]
+
+function createRandomSuggestions(previous = []) {
+  let selection = []
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const shuffled = [...suggestionPool]
+    const randomValues = new Uint32Array(shuffled.length)
+    crypto.getRandomValues(randomValues)
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const target = randomValues[index] % (index + 1)
+      ;[shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]]
+    }
+    selection = shuffled.slice(0, 3)
+    if (selection.join('\n') !== previous.join('\n')) break
+  }
+  return selection
+}
 
 function defaultApiUrl() {
   if (window.location.port === '8765') return window.location.origin
@@ -90,6 +122,7 @@ function App() {
   const [chatHistory, setChatHistory] = useState(initialChats)
   const [activeChatId, setActiveChatId] = useState(initialChats[0]?.id || null)
   const [messages, setMessages] = useState(initialChats[0]?.messages || [])
+  const [suggestions, setSuggestions] = useState(createRandomSuggestions)
   const [question, setQuestion] = useState('')
   const [asking, setAsking] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -249,9 +282,11 @@ function App() {
 
   function startNewChat() {
     if (asking) return
+    const nextSuggestions = createRandomSuggestions(suggestions)
     setActiveChatId(null)
     setMessages([])
     setQuestion('')
+    setSuggestions(nextSuggestions)
   }
 
   function openSavedChat(chat) {
