@@ -889,9 +889,12 @@ button:focus-visible, textarea:focus-visible { outline: 3px solid rgba(45, 140, 
 @media (max-width: 900px) {
   .page-shell { width: min(100% - 20px, 720px); grid-template-columns: 1fr; margin: 10px auto; border-radius: 28px; }
   .sidebar { min-height: auto; padding: 18px; border-radius: 28px; }
-  .chat-history, .library, .local-card { display: none; }
+  .library, .local-card { display: none; }
   .brand-row { padding-bottom: 14px; }
-  .new-chat { display: none; }
+  .chat-history { margin-top: 16px; }
+  .history-list { max-height: 128px; }
+  .history-actions { opacity: 1; }
+  .developer-credit { display: none; }
   .workspace { padding: 22px 18px 28px; }
 }
 
