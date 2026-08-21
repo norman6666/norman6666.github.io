@@ -239,6 +239,7 @@ button { color: inherit; }
 
 .workspace { min-width: 0; padding: 40px clamp(28px, 4vw, 64px) 46px; }
 .topbar { justify-content: space-between; gap: 24px; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
 .eyebrow { margin: 0 0 8px; color: var(--mint-deep); font-size: 10px; font-weight: 800; letter-spacing: 0.2em; }
 h1 {
   margin: 0;
@@ -257,6 +258,28 @@ h1 em { color: var(--mint-deep); font-style: normal; }
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.76);
   cursor: pointer;
+}
+.admin-entry {
+  min-height: 46px;
+  padding: 0 17px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.68);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease, color 160ms ease;
+}
+.admin-entry span { color: var(--mint-deep); font-size: 18px; line-height: 1; }
+.admin-entry:hover,
+.admin-entry.verified {
+  border-color: rgba(45, 140, 121, 0.25);
+  color: var(--mint-deep);
+  background: rgba(152, 215, 197, 0.16);
 }
 
 .upload-card {
@@ -618,6 +641,144 @@ button:focus-visible, textarea:focus-visible { outline: 3px solid rgba(45, 140, 
   font-weight: 700;
   cursor: pointer;
 }
+.save-settings:disabled { cursor: not-allowed; opacity: 0.5; }
+.admin-modal { width: min(620px, 100%); }
+.admin-login { text-align: center; }
+.admin-login > p {
+  margin: 2px auto 22px;
+  max-width: 330px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
+.admin-login > small {
+  display: block;
+  margin-top: 13px;
+  color: #91a1a5;
+  font-size: 9px;
+}
+.admin-login label { text-align: left; }
+.admin-lock {
+  width: 62px;
+  height: 62px;
+  margin: 0 auto 15px;
+  display: grid;
+  place-items: center;
+  border-radius: 23px;
+  color: #b9eadc;
+  background: linear-gradient(145deg, #123742, #1b5260);
+  box-shadow: 0 14px 34px rgba(18, 55, 66, 0.18);
+}
+.admin-lock span { font-size: 28px; transform: rotate(45deg); }
+.admin-error {
+  margin: 13px 0;
+  padding: 11px 13px;
+  border-radius: 14px;
+  color: #974b43;
+  background: rgba(213, 119, 104, 0.12);
+  font-size: 10px;
+  line-height: 1.5;
+}
+.admin-console-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+  padding: 11px 13px;
+  border-radius: 15px;
+  color: var(--muted);
+  background: rgba(152, 215, 197, 0.13);
+  font-size: 10px;
+}
+.admin-console-head div { display: flex; align-items: center; gap: 7px; }
+.admin-console-head i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--mint-deep);
+  box-shadow: 0 0 0 3px rgba(45, 140, 121, 0.12);
+}
+.admin-console-head button {
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.65);
+  font-size: 9px;
+  cursor: pointer;
+}
+.admin-doc-list {
+  max-height: min(430px, 54vh);
+  display: grid;
+  gap: 8px;
+  overflow-y: auto;
+  padding-right: 3px;
+}
+.admin-doc-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.58);
+}
+.admin-file-icon {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  color: var(--mint-deep);
+  background: rgba(152, 215, 197, 0.24);
+  font-size: 9px;
+  font-weight: 800;
+}
+.admin-doc-copy { min-width: 0; flex: 1; }
+.admin-doc-copy strong,
+.admin-doc-copy small { display: block; }
+.admin-doc-copy strong {
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.admin-doc-copy small { margin-top: 3px; color: var(--muted); font-size: 9px; }
+.admin-doc-copy span {
+  display: inline-block;
+  margin-top: 5px;
+  padding: 3px 7px;
+  border-radius: 99px;
+  color: var(--mint-deep);
+  background: rgba(152, 215, 197, 0.17);
+  font-size: 8px;
+  font-weight: 700;
+}
+.delete-doc {
+  padding: 8px 11px;
+  flex: 0 0 auto;
+  border: 1px solid rgba(195, 89, 78, 0.18);
+  border-radius: 12px;
+  color: #a24c43;
+  background: rgba(213, 119, 104, 0.09);
+  font-size: 9px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.delete-doc:hover { background: rgba(213, 119, 104, 0.16); }
+.delete-doc:disabled { cursor: not-allowed; opacity: 0.45; }
+.admin-empty {
+  padding: 34px 15px;
+  border-radius: 18px;
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.42);
+  text-align: center;
+  font-size: 11px;
+}
+.admin-recovery-tip { margin: 14px 3px 0; color: #87999d; font-size: 9px; line-height: 1.6; }
 .toast {
   position: fixed;
   right: 28px;
@@ -646,6 +807,8 @@ button:focus-visible, textarea:focus-visible { outline: 3px solid rgba(45, 140, 
 
 @media (max-width: 600px) {
   .topbar .round-button, .upload-copy span, .composer-foot > span { display: none; }
+  .admin-entry { min-height: 42px; padding: 0 12px; }
+  .admin-entry span { display: none; }
   .upload-card { flex-wrap: wrap; }
   .upload-card > button { width: 100%; margin-left: 0; }
   .conversation { min-height: 300px; padding: 20px 16px; }
@@ -655,4 +818,5 @@ button:focus-visible, textarea:focus-visible { outline: 3px solid rgba(45, 140, 
   .source-item .source-action .hide-label { display: none; }
   .source-content { margin-left: 10px; }
   .toast { right: 20px; bottom: 20px; }
+  .admin-doc-row { align-items: flex-start; }
 }

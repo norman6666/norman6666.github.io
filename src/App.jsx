@@ -43,6 +43,13 @@ function App() {
   const [uploading, setUploading] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [adminOpen, setAdminOpen] = useState(false)
+  const [adminPassword, setAdminPassword] = useState('')
+  const [adminToken, setAdminToken] = useState('')
+  const [adminDocuments, setAdminDocuments] = useState([])
+  const [adminLoading, setAdminLoading] = useState(false)
+  const [adminError, setAdminError] = useState('')
+  const [deletingDoc, setDeletingDoc] = useState('')
   const [toast, setToast] = useState('')
   const fileInputRef = useRef(null)
   const conversationRef = useRef(null)
@@ -59,7 +66,11 @@ function App() {
       headers: { ...headers, ...(options.headers || {}) },
     })
     const payload = await response.json().catch(() => ({}))
-    if (!response.ok) throw new Error(payload.detail || `请求失败 (${response.status})`)
+    if (!response.ok) {
+      const error = new Error(payload.detail || `请求失败 (${response.status})`)
+      error.status = response.status
+      throw error
+    }
     return payload
   }, [apiUrl, headers])
 
@@ -187,6 +198,93 @@ function App() {
     setHealth({ status: 'checking', documents: 0, generator: 'retrieval_only' })
   }
 
+  async function loadAdminDocuments(currentToken = adminToken) {
+    if (!currentToken) return
+    setAdminLoading(true)
+    setAdminError('')
+    try {
+      const payload = await request('/api/admin/documents', {
+        headers: { 'X-Admin-Token': currentToken },
+      })
+      setAdminDocuments(payload.documents || [])
+    } catch (error) {
+      setAdminError(error.message)
+      if (error.status === 401) {
+        setAdminToken('')
+        setAdminDocuments([])
+      }
+    } finally {
+      setAdminLoading(false)
+    }
+  }
+
+  function openAdminPanel() {
+    setAdminOpen(true)
+    setAdminError('')
+    if (adminToken) loadAdminDocuments(adminToken)
+  }
+
+  async function loginAdmin(event) {
+    event.preventDefault()
+    if (!adminPassword || adminLoading) return
+    setAdminLoading(true)
+    setAdminError('')
+    try {
+      const payload = await request('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: adminPassword }),
+      })
+      setAdminToken(payload.token)
+      setAdminPassword('')
+      await loadAdminDocuments(payload.token)
+    } catch (error) {
+      setAdminError(error.message)
+    } finally {
+      setAdminLoading(false)
+    }
+  }
+
+  async function deleteAdminDocument(doc) {
+    if (deletingDoc) return
+    const confirmed = window.confirm(
+      `确定把“${doc.name}”移出知识库吗？\n\n文件会保存在电脑的可恢复区。`,
+    )
+    if (!confirmed) return
+
+    setDeletingDoc(doc.id)
+    setAdminError('')
+    try {
+      const payload = await request(`/api/admin/documents/${encodeURIComponent(doc.id)}`, {
+        method: 'DELETE',
+        headers: { 'X-Admin-Token': adminToken },
+      })
+      if (selectedDoc === doc.id) setSelectedDoc(null)
+      setToast(`${doc.name} 已移出知识库${payload.document?.recoverable ? '，本地仍可恢复' : ''}`)
+      await Promise.all([loadAdminDocuments(adminToken), loadDocuments(), checkService()])
+    } catch (error) {
+      setAdminError(error.message)
+      if (error.status === 401) {
+        setAdminToken('')
+        setAdminDocuments([])
+      }
+    } finally {
+      setDeletingDoc('')
+    }
+  }
+
+  function logoutAdmin() {
+    setAdminToken('')
+    setAdminDocuments([])
+    setAdminError('')
+  }
+
+  function formatFileSize(bytes) {
+    if (bytes === null || bytes === undefined) return '源文件未找到'
+    if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`
+    return `${(bytes / 1024 / 1024).toFixed(1)} MB`
+  }
+
   const online = health.status === 'ok'
   const activeDocName = documents.find((doc) => doc.id === selectedDoc)?.name
 
@@ -243,7 +341,12 @@ function App() {
       <section className="workspace">
         <header className="topbar">
           <div><p className="eyebrow">EMBEDDED KNOWLEDGE ASSISTANT</p><h1>让芯片手册，<em>开口回答。</em></h1></div>
-          <button className="round-button" type="button" aria-label="网站设置" onClick={() => setSettingsOpen(true)}>⚙</button>
+          <div className="topbar-actions">
+            <button className={`admin-entry ${adminToken ? 'verified' : ''}`} type="button" onClick={openAdminPanel}>
+              <span aria-hidden="true">◇</span>{adminToken ? '管理知识库' : '管理员验证'}
+            </button>
+            <button className="round-button" type="button" aria-label="网站设置" onClick={() => setSettingsOpen(true)}>⚙</button>
+          </div>
         </header>
 
         <section
@@ -349,6 +452,75 @@ function App() {
             <p className="settings-tip">网站会自动连接公开问答服务，只有维护时才需要修改这里。</p>
             <button className="save-settings" type="submit">保存并重新连接</button>
           </form>
+        </div>
+      )}
+
+      {adminOpen && (
+        <div className="modal-backdrop" role="presentation" onMouseDown={() => setAdminOpen(false)}>
+          <section className="settings-modal admin-modal" role="dialog" aria-modal="true" aria-labelledby="admin-title" onMouseDown={(event) => event.stopPropagation()}>
+            <div className="modal-head">
+              <div>
+                <p>{adminToken ? 'ADMIN CONSOLE' : 'SECURE ACCESS'}</p>
+                <h2 id="admin-title">{adminToken ? '知识库管理' : '管理员验证'}</h2>
+              </div>
+              <button type="button" aria-label="关闭管理员面板" onClick={() => setAdminOpen(false)}>×</button>
+            </div>
+
+            {!adminToken ? (
+              <form className="admin-login" onSubmit={loginAdmin}>
+                <div className="admin-lock" aria-hidden="true"><span>◇</span></div>
+                <p>验证通过后，可以远程移除知识库中的文件。</p>
+                <label>
+                  管理员密码
+                  <input
+                    type="password"
+                    value={adminPassword}
+                    onChange={(event) => setAdminPassword(event.target.value)}
+                    placeholder="输入管理员密码"
+                    autoComplete="current-password"
+                    autoFocus
+                  />
+                </label>
+                {adminError && <div className="admin-error" role="alert">{adminError}</div>}
+                <button className="save-settings" type="submit" disabled={!adminPassword || adminLoading}>
+                  {adminLoading ? '正在验证…' : '验证并进入'}
+                </button>
+                <small>连续输错5次将暂时锁定10分钟。</small>
+              </form>
+            ) : (
+              <div className="admin-console">
+                <div className="admin-console-head">
+                  <div><i aria-hidden="true" />身份已验证 · 共 {adminDocuments.length} 份文档</div>
+                  <button type="button" onClick={logoutAdmin}>退出管理</button>
+                </div>
+
+                {adminError && <div className="admin-error" role="alert">{adminError}</div>}
+                <div className="admin-doc-list">
+                  {adminLoading && !adminDocuments.length && <div className="admin-empty">正在读取知识库…</div>}
+                  {!adminLoading && !adminDocuments.length && <div className="admin-empty">知识库中没有文件</div>}
+                  {adminDocuments.map((doc) => (
+                    <div className="admin-doc-row" key={doc.id}>
+                      <span className="admin-file-icon" aria-hidden="true">PDF</span>
+                      <div className="admin-doc-copy">
+                        <strong>{doc.name}</strong>
+                        <small>{doc.pages} 页 · {formatFileSize(doc.size_bytes)}</small>
+                        <span>{doc.source === 'uploaded' ? '用户上传' : '预置资料'}</span>
+                      </div>
+                      <button
+                        className="delete-doc"
+                        type="button"
+                        disabled={Boolean(deletingDoc)}
+                        onClick={() => deleteAdminDocument(doc)}
+                      >
+                        {deletingDoc === doc.id ? '处理中…' : '移出'}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <p className="admin-recovery-tip">移出的文件会保存在本机可恢复区，不会立即永久删除。</p>
+              </div>
+            )}
+          </section>
         </div>
       )}
 
