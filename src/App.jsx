@@ -56,6 +56,10 @@ function isLoopbackUrl(value) {
 
 function initialApiUrl() {
   const saved = localStorage.getItem(API_URL_KEY)
+  if (PUBLIC_API_URL && window.location.hostname === 'norman6666.github.io') {
+    localStorage.setItem(API_URL_KEY, PUBLIC_API_URL)
+    return PUBLIC_API_URL
+  }
   if (PUBLIC_API_URL && isLoopbackUrl(saved) && window.location.port !== '8765') {
     localStorage.setItem(API_URL_KEY, PUBLIC_API_URL)
     return PUBLIC_API_URL
@@ -144,10 +148,12 @@ function App() {
     [token],
   )
 
-  const request = useCallback(async (path, options = {}) => {
-    const base = apiUrl.replace(/\/$/, '')
+  const requestAt = useCallback(async (baseUrl, path, options = {}) => {
+    const base = baseUrl.replace(/\/$/, '')
+    const method = (options.method || 'GET').toUpperCase()
     const response = await fetch(`${base}${path}`, {
       ...options,
+      cache: options.cache || (method === 'GET' ? 'no-store' : 'default'),
       headers: { ...headers, ...(options.headers || {}) },
     })
     const payload = await response.json().catch(() => ({}))
@@ -157,23 +163,53 @@ function App() {
       throw error
     }
     return payload
-  }, [apiUrl, headers])
+  }, [headers])
 
-  const loadDocuments = useCallback(async () => {
-    const payload = await request('/api/documents')
+  const request = useCallback(
+    (path, options = {}) => requestAt(apiUrl, path, options),
+    [apiUrl, requestAt],
+  )
+
+  const loadDocumentsAt = useCallback(async (baseUrl) => {
+    const payload = await requestAt(baseUrl, '/api/documents')
     setDocuments(payload.documents || [])
     return payload.documents || []
-  }, [request])
+  }, [requestAt])
+
+  const loadDocuments = useCallback(async () => {
+    return loadDocumentsAt(apiUrl)
+  }, [apiUrl, loadDocumentsAt])
 
   const checkService = useCallback(async () => {
+    let activeBase = apiUrl
+    let state
     try {
-      const state = await request('/api/health')
-      setHealth(state)
-      await loadDocuments()
+      state = await requestAt(activeBase, '/api/health')
     } catch {
-      setHealth({ status: 'offline', documents: 0, generator: 'retrieval_only' })
+      if (PUBLIC_API_URL && activeBase !== PUBLIC_API_URL) {
+        try {
+          activeBase = PUBLIC_API_URL
+          state = await requestAt(activeBase, '/api/health')
+          localStorage.setItem(API_URL_KEY, activeBase)
+          setApiUrl(activeBase)
+          setDraftApiUrl(activeBase)
+        } catch {
+          setHealth({ status: 'offline', documents: 0, generator: 'retrieval_only' })
+          return
+        }
+      } else {
+        setHealth({ status: 'offline', documents: 0, generator: 'retrieval_only' })
+        return
+      }
     }
-  }, [request, loadDocuments])
+
+    setHealth(state)
+    try {
+      await loadDocumentsAt(activeBase)
+    } catch {
+      setDocuments([])
+    }
+  }, [apiUrl, requestAt, loadDocumentsAt])
 
   useEffect(() => {
     checkService()
