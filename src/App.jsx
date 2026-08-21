@@ -3,8 +3,10 @@ import './App.css'
 
 const API_URL_KEY = 'xinwen_api_url'
 const API_TOKEN_KEY = 'xinwen_api_token'
+const CHAT_HISTORY_KEY = 'xinwen_chat_history_v1'
 const PUBLIC_API_URL = (import.meta.env.VITE_PUBLIC_API_URL || '').replace(/\/$/, '')
 const PUBLIC_UPLOAD_LIMIT_MB = 30
+const MAX_SAVED_CHATS = 20
 const suggestions = [
   'TIM1 怎么设置互补 PWM 和死区？',
   '这块开发板的晶振接在哪些引脚？',
@@ -29,7 +31,55 @@ function initialApiUrl() {
   return saved || defaultApiUrl()
 }
 
+function loadSavedChats() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CHAT_HISTORY_KEY) || '[]')
+    if (!Array.isArray(saved)) return []
+    return saved
+      .filter((chat) => chat && typeof chat.id === 'string' && Array.isArray(chat.messages))
+      .map((chat) => ({
+        id: chat.id,
+        title: typeof chat.title === 'string' && chat.title.trim() ? chat.title.trim() : '未命名对话',
+        messages: chat.messages.filter((message) => message?.role && typeof message.content === 'string'),
+        createdAt: Number(chat.createdAt) || Date.now(),
+        updatedAt: Number(chat.updatedAt) || Date.now(),
+      }))
+      .sort((a, b) => b.updatedAt - a.updatedAt)
+      .slice(0, MAX_SAVED_CHATS)
+  } catch {
+    return []
+  }
+}
+
+function compactChatsForStorage(chats) {
+  return chats.slice(0, MAX_SAVED_CHATS).map((chat) => ({
+    ...chat,
+    messages: chat.messages.slice(-40).map((message) => ({
+      ...message,
+      sources: message.sources?.slice(0, 5).map((source) => ({
+        ...source,
+        content: source.content?.slice(0, 1200),
+      })),
+    })),
+  }))
+}
+
+function titleFromQuestion(question) {
+  const oneLine = question.replace(/\s+/g, ' ').trim()
+  return oneLine.length > 22 ? `${oneLine.slice(0, 22)}…` : oneLine
+}
+
+function formatChatTime(timestamp) {
+  const date = new Date(timestamp)
+  const today = new Date()
+  if (date.toDateString() === today.toDateString()) {
+    return date.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false })
+  }
+  return date.toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric' })
+}
+
 function App() {
+  const [initialChats] = useState(loadSavedChats)
   const [apiUrl, setApiUrl] = useState(initialApiUrl)
   const [token, setToken] = useState(() => localStorage.getItem(API_TOKEN_KEY) || '')
   const [draftApiUrl, setDraftApiUrl] = useState(apiUrl)
@@ -37,7 +87,9 @@ function App() {
   const [health, setHealth] = useState({ status: 'checking', documents: 0, generator: 'retrieval_only' })
   const [documents, setDocuments] = useState([])
   const [selectedDoc, setSelectedDoc] = useState(null)
-  const [messages, setMessages] = useState([])
+  const [chatHistory, setChatHistory] = useState(initialChats)
+  const [activeChatId, setActiveChatId] = useState(initialChats[0]?.id || null)
+  const [messages, setMessages] = useState(initialChats[0]?.messages || [])
   const [question, setQuestion] = useState('')
   const [asking, setAsking] = useState(false)
   const [uploading, setUploading] = useState(false)
@@ -109,11 +161,49 @@ function App() {
     return () => window.clearTimeout(timer)
   }, [toast])
 
+  useEffect(() => {
+    try {
+      localStorage.setItem(CHAT_HISTORY_KEY, JSON.stringify(compactChatsForStorage(chatHistory)))
+    } catch {
+      // 浏览器空间不足时保留当前页面中的对话，不影响继续问答。
+    }
+  }, [chatHistory])
+
+  function saveChatMessages(chatId, nextMessages) {
+    if (!chatId) return
+    // oxlint-disable-next-line react/purity -- runs only after a visitor sends a message
+    const updatedAt = Date.now()
+    setChatHistory((current) => {
+      const active = current.find((chat) => chat.id === chatId)
+      if (!active) return current
+      const updated = { ...active, messages: nextMessages, updatedAt }
+      return [updated, ...current.filter((chat) => chat.id !== chatId)].slice(0, MAX_SAVED_CHATS)
+    })
+  }
+
   async function askQuestion(text) {
     const cleanQuestion = text.trim()
     if (!cleanQuestion || asking) return
 
-    setMessages((current) => [...current, { id: crypto.randomUUID(), role: 'user', content: cleanQuestion }])
+    let conversationId = activeChatId
+    if (!conversationId) {
+      conversationId = crypto.randomUUID()
+      // oxlint-disable-next-line react/purity -- runs only after a visitor starts a conversation
+      const now = Date.now()
+      setActiveChatId(conversationId)
+      setChatHistory((current) => [{
+        id: conversationId,
+        title: titleFromQuestion(cleanQuestion),
+        messages: [],
+        createdAt: now,
+        updatedAt: now,
+      }, ...current].slice(0, MAX_SAVED_CHATS))
+    }
+
+    const userMessage = { id: crypto.randomUUID(), role: 'user', content: cleanQuestion }
+    const pendingMessages = [...messages, userMessage]
+    setMessages(pendingMessages)
+    saveChatMessages(conversationId, pendingMessages)
     setQuestion('')
     setAsking(true)
     try {
@@ -122,20 +212,24 @@ function App() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: cleanQuestion, doc_id: selectedDoc, top_k: 5 }),
       })
-      setMessages((current) => [...current, {
+      const answeredMessages = [...pendingMessages, {
         id: crypto.randomUUID(),
         role: 'assistant',
         content: payload.answer,
         sources: payload.sources || [],
         mode: payload.mode,
-      }])
+      }]
+      setMessages(answeredMessages)
+      saveChatMessages(conversationId, answeredMessages)
     } catch (error) {
-      setMessages((current) => [...current, {
+      const failedMessages = [...pendingMessages, {
         id: crypto.randomUUID(),
         role: 'assistant',
         content: `暂时无法回答：${error.message}。请检查左下角的问答服务是否已经连接。`,
         error: true,
-      }])
+      }]
+      setMessages(failedMessages)
+      saveChatMessages(conversationId, failedMessages)
     } finally {
       setAsking(false)
     }
@@ -150,6 +244,43 @@ function App() {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault()
       askQuestion(question)
+    }
+  }
+
+  function startNewChat() {
+    if (asking) return
+    setActiveChatId(null)
+    setMessages([])
+    setQuestion('')
+  }
+
+  function openSavedChat(chat) {
+    if (asking || chat.id === activeChatId) return
+    setActiveChatId(chat.id)
+    setMessages(chat.messages)
+    setQuestion('')
+  }
+
+  function renameSavedChat(event, chat) {
+    event.stopPropagation()
+    if (asking) return
+    const nextTitle = window.prompt('给这段对话起个名字', chat.title)?.trim()
+    if (!nextTitle) return
+    setChatHistory((current) => current.map((item) => (
+      item.id === chat.id ? { ...item, title: nextTitle.slice(0, 36) } : item
+    )))
+  }
+
+  function deleteSavedChat(event, chat) {
+    event.stopPropagation()
+    if (asking) return
+    if (!window.confirm(`确定删除“${chat.title}”吗？`)) return
+    const remaining = chatHistory.filter((item) => item.id !== chat.id)
+    setChatHistory(remaining)
+    if (activeChatId === chat.id) {
+      setActiveChatId(remaining[0]?.id || null)
+      setMessages(remaining[0]?.messages || [])
+      setQuestion('')
     }
   }
 
@@ -302,9 +433,28 @@ function App() {
           <div><strong>芯问</strong><small>Chip Manual AI</small></div>
         </div>
 
-        <button className="new-chat" type="button" onClick={() => setMessages([])}>
+        <button className="new-chat" type="button" onClick={startNewChat} disabled={asking}>
           <span aria-hidden="true">＋</span>新建对话
         </button>
+
+        <section className="chat-history" aria-labelledby="history-title">
+          <div className="section-heading"><p id="history-title">最近对话</p><span>{chatHistory.length}</span></div>
+          <div className="history-list">
+            {chatHistory.map((chat) => (
+              <div className={`history-item ${activeChatId === chat.id ? 'active' : ''}`} key={chat.id}>
+                <button className="history-main" type="button" disabled={asking} onClick={() => openSavedChat(chat)} title={chat.title}>
+                  <span className="history-bubble" aria-hidden="true">••</span>
+                  <span><strong>{chat.title}</strong><small>{formatChatTime(chat.updatedAt)}</small></span>
+                </button>
+                <div className="history-actions">
+                  <button type="button" disabled={asking} aria-label={`重命名 ${chat.title}`} title="重命名" onClick={(event) => renameSavedChat(event, chat)}>✎</button>
+                  <button type="button" disabled={asking} aria-label={`删除 ${chat.title}`} title="删除" onClick={(event) => deleteSavedChat(event, chat)}>×</button>
+                </div>
+              </div>
+            ))}
+            {!chatHistory.length && <div className="empty-history">你的对话只保存在当前浏览器</div>}
+          </div>
+        </section>
 
         <section className="library" aria-labelledby="library-title">
           <div className="section-heading"><p id="library-title">知识库</p><span>{documents.length}</span></div>
