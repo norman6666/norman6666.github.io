@@ -3,6 +3,8 @@ import './App.css'
 
 const API_URL_KEY = 'xinwen_api_url'
 const API_TOKEN_KEY = 'xinwen_api_token'
+const PUBLIC_API_URL = (import.meta.env.VITE_PUBLIC_API_URL || '').replace(/\/$/, '')
+const PUBLIC_UPLOAD_LIMIT_MB = 30
 const suggestions = [
   'TIM1 怎么设置互补 PWM 和死区？',
   '这块开发板的晶振接在哪些引脚？',
@@ -11,11 +13,24 @@ const suggestions = [
 
 function defaultApiUrl() {
   if (window.location.port === '8765') return window.location.origin
-  return 'http://127.0.0.1:8765'
+  return PUBLIC_API_URL || 'http://127.0.0.1:8765'
+}
+
+function isLoopbackUrl(value) {
+  return /^https?:\/\/(127\.0\.0\.1|localhost)(:\d+)?/i.test(value || '')
+}
+
+function initialApiUrl() {
+  const saved = localStorage.getItem(API_URL_KEY)
+  if (PUBLIC_API_URL && isLoopbackUrl(saved) && window.location.port !== '8765') {
+    localStorage.setItem(API_URL_KEY, PUBLIC_API_URL)
+    return PUBLIC_API_URL
+  }
+  return saved || defaultApiUrl()
 }
 
 function App() {
-  const [apiUrl, setApiUrl] = useState(() => localStorage.getItem(API_URL_KEY) || defaultApiUrl())
+  const [apiUrl, setApiUrl] = useState(initialApiUrl)
   const [token, setToken] = useState(() => localStorage.getItem(API_TOKEN_KEY) || '')
   const [draftApiUrl, setDraftApiUrl] = useState(apiUrl)
   const [draftToken, setDraftToken] = useState(token)
@@ -107,7 +122,7 @@ function App() {
       setMessages((current) => [...current, {
         id: crypto.randomUUID(),
         role: 'assistant',
-        content: `暂时无法回答：${error.message}。请检查左下角的本机服务是否已经连接。`,
+        content: `暂时无法回答：${error.message}。请检查左下角的问答服务是否已经连接。`,
         error: true,
       }])
     } finally {
@@ -129,6 +144,14 @@ function App() {
 
   async function uploadFile(file) {
     if (!file || uploading) return
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+      setToast('公开体验只允许上传 PDF 芯片手册')
+      return
+    }
+    if (file.size > PUBLIC_UPLOAD_LIMIT_MB * 1024 * 1024) {
+      setToast(`文件太大，请上传 ${PUBLIC_UPLOAD_LIMIT_MB} MB 以内的 PDF`)
+      return
+    }
     setUploading(true)
     const form = new FormData()
     form.append('file', file)
@@ -202,7 +225,7 @@ function App() {
         <div className={`local-card ${online ? 'online' : health.status}`}>
           <span className="status-dot" aria-hidden="true" />
           <div>
-            <strong>{online ? '本机服务已连接' : health.status === 'checking' ? '正在连接' : '本机服务未连接'}</strong>
+            <strong>{online ? '问答服务已连接' : health.status === 'checking' ? '正在连接' : '问答服务未连接'}</strong>
             <small>{online ? (health.generator === 'ollama' ? `${health.model} 回答` : '资料检索模式') : '点击右侧进行设置'}</small>
           </div>
           <button type="button" aria-label="连接设置" onClick={() => setSettingsOpen(true)}>•••</button>
@@ -226,9 +249,9 @@ function App() {
           <div className="upload-symbol" aria-hidden="true">{uploading ? '⋯' : '↑'}</div>
           <div className="upload-copy">
             <strong>{uploading ? '正在解析并建立索引，请稍等…' : '把新的芯片手册放进知识库'}</strong>
-            <span>{uploading ? '大型参考手册可能需要几分钟' : '拖入 PDF、DOCX 或 TXT，系统会在本机完成解析和索引'}</span>
+            <span>{uploading ? '大型参考手册可能需要几分钟' : `公开体验 · 仅限 PDF · 不超过 ${PUBLIC_UPLOAD_LIMIT_MB} MB · 请勿上传敏感资料`}</span>
           </div>
-          <input ref={fileInputRef} type="file" accept=".pdf,.docx,.txt,.md,.c,.h,.epub" onChange={(event) => uploadFile(event.target.files?.[0])} hidden />
+          <input ref={fileInputRef} type="file" accept=".pdf,application/pdf" onChange={(event) => uploadFile(event.target.files?.[0])} hidden />
           <button type="button" disabled={uploading} onClick={() => fileInputRef.current?.click()}>{uploading ? '处理中' : '选择文件'}</button>
         </section>
 
@@ -295,7 +318,7 @@ function App() {
             <textarea
               aria-label="输入问题"
               rows="1"
-              placeholder={online ? '问一个芯片问题…' : '请先启动本机服务…'}
+              placeholder={online ? '问一个芯片问题…' : '问答服务暂时离线…'}
               value={question}
               onChange={(event) => setQuestion(event.target.value)}
               onKeyDown={handleComposerKeyDown}
@@ -310,12 +333,12 @@ function App() {
         <div className="modal-backdrop" role="presentation" onMouseDown={() => setSettingsOpen(false)}>
           <form className="settings-modal" onSubmit={saveSettings} onMouseDown={(event) => event.stopPropagation()}>
             <div className="modal-head">
-              <div><p>本机连接</p><h2>连接到你的 em-rag</h2></div>
+              <div><p>服务连接</p><h2>连接到芯问后端</h2></div>
               <button type="button" aria-label="关闭设置" onClick={() => setSettingsOpen(false)}>×</button>
             </div>
-            <label>服务地址<input value={draftApiUrl} onChange={(event) => setDraftApiUrl(event.target.value)} placeholder="http://127.0.0.1:8765" /></label>
-            <label>连接口令（可选）<input type="password" value={draftToken} onChange={(event) => setDraftToken(event.target.value)} placeholder="本机使用可以留空" /></label>
-            <p className="settings-tip">在自己的电脑上使用默认地址即可；通过公网访问时再填写安全通道地址。</p>
+            <label>服务地址<input value={draftApiUrl} onChange={(event) => setDraftApiUrl(event.target.value)} placeholder="https://你的安全通道地址" /></label>
+            <label>连接口令（可选）<input type="password" value={draftToken} onChange={(event) => setDraftToken(event.target.value)} placeholder="公开体验可以留空" /></label>
+            <p className="settings-tip">网站会自动连接公开问答服务，只有维护时才需要修改这里。</p>
             <button className="save-settings" type="submit">保存并重新连接</button>
           </form>
         </div>
