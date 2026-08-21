@@ -260,10 +260,27 @@ function App() {
                     <summary>{message.sources.length} 条手册依据</summary>
                     <div className="source-list">
                       {message.sources.map((source, index) => (
-                        <div className="source-item" key={`${source.doc_id}-${source.page}-${index}`}>
-                          <span>{index + 1}</span>
-                          <div><strong>{source.document} · 第 {source.page} 页</strong><small>{source.section || '相关内容'}</small></div>
-                        </div>
+                        <details className="source-item" key={`${source.doc_id}-${source.page}-${index}`}>
+                          <summary className="source-summary">
+                            <span className="source-index">{index + 1}</span>
+                            <span className="source-meta">
+                              <strong>{source.document} · 第 {source.page} 页</strong>
+                              <small>{source.section || '相关内容'}</small>
+                            </span>
+                            <span className="source-action" aria-hidden="true">
+                              <span className="show-label">展开原文</span>
+                              <span className="hide-label">收起原文</span>
+                              <i>⌄</i>
+                            </span>
+                          </summary>
+                          <div className="source-content">
+                            <div className="source-content-head">
+                              <strong>检索到的手册原文</strong>
+                              <span>第 {source.page} 页</span>
+                            </div>
+                            <p>{source.content || '这条依据暂时没有可显示的原文。'}</p>
+                          </div>
+                        </details>
                       ))}
                     </div>
                   </details>
