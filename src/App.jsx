@@ -214,6 +214,8 @@ function App() {
   const [suggestions, setSuggestions] = useState(createRandomSuggestions)
   const [question, setQuestion] = useState('')
   const [asking, setAsking] = useState(false)
+  const [searchStartedAt, setSearchStartedAt] = useState(0)
+  const [searchElapsed, setSearchElapsed] = useState(0)
   const [uploading, setUploading] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -319,6 +321,14 @@ function App() {
   }, [messages, asking])
 
   useEffect(() => {
+    if (!asking || !searchStartedAt) return undefined
+    const timer = window.setInterval(() => {
+      setSearchElapsed(Math.floor((performance.now() - searchStartedAt) / 1000))
+    }, 250)
+    return () => window.clearInterval(timer)
+  }, [asking, searchStartedAt])
+
+  useEffect(() => {
     if (!toast) return undefined
     const timer = window.setTimeout(() => setToast(''), 3600)
     return () => window.clearTimeout(timer)
@@ -368,6 +378,9 @@ function App() {
     setMessages(pendingMessages)
     saveChatMessages(conversationId, pendingMessages)
     setQuestion('')
+    // oxlint-disable-next-line react/purity -- captures the start time of this user action
+    setSearchStartedAt(performance.now())
+    setSearchElapsed(0)
     setAsking(true)
     try {
       const history = messages
@@ -785,7 +798,7 @@ function App() {
               </article>
             ))}
 
-            {asking && <div className="thinking" aria-label="正在查询手册"><span /><span /><span />正在查手册</div>}
+            {asking && <div className="thinking" aria-label={`正在查询手册，已用时 ${searchElapsed} 秒`}><span /><span /><span />正在查手册 · 已用时 {searchElapsed} 秒</div>}
           </div>
 
           <form className="composer" onSubmit={submitQuestion}>
