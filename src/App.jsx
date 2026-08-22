@@ -82,6 +82,7 @@ function loadSavedChats() {
         id: chat.id,
         title: typeof chat.title === 'string' && chat.title.trim() ? chat.title.trim() : '未命名对话',
         messages: chat.messages.filter((message) => message?.role && typeof message.content === 'string'),
+        assistantMode: chat.assistantMode === 'engineering' ? 'engineering' : 'qa',
         createdAt: Number(chat.createdAt) || Date.now(),
         updatedAt: Number(chat.updatedAt) || Date.now(),
       }))
@@ -230,6 +231,7 @@ function App() {
   const [messages, setMessages] = useState(initialChats[0]?.messages || [])
   const [suggestions, setSuggestions] = useState(createRandomSuggestions)
   const [question, setQuestion] = useState('')
+  const [assistantMode, setAssistantMode] = useState(initialChats[0]?.assistantMode || 'qa')
   const [asking, setAsking] = useState(false)
   const [searchStartedAt, setSearchStartedAt] = useState(0)
   const [searchElapsed, setSearchElapsed] = useState(0)
@@ -386,6 +388,7 @@ function App() {
         id: conversationId,
         title: titleFromQuestion(cleanQuestion),
         messages: [],
+        assistantMode,
         createdAt: now,
         updatedAt: now,
       }, ...current].slice(0, MAX_SAVED_CHATS))
@@ -410,7 +413,7 @@ function App() {
       const payload = await request('/api/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: cleanQuestion, doc_id: selectedDoc, top_k: 5, history }),
+        body: JSON.stringify({ question: cleanQuestion, doc_id: selectedDoc, top_k: 5, history, assistant_mode: assistantMode }),
       })
       const answeredMessages = [...pendingMessages, {
         id: crypto.randomUUID(),
@@ -459,10 +462,21 @@ function App() {
     setSuggestions(nextSuggestions)
   }
 
+  function changeAssistantMode(nextMode) {
+    if (asking || nextMode === assistantMode) return
+    setAssistantMode(nextMode)
+    if (activeChatId) {
+      setChatHistory((current) => current.map((chat) => (
+        chat.id === activeChatId ? { ...chat, assistantMode: nextMode } : chat
+      )))
+    }
+  }
+
   function openSavedChat(chat) {
     if (asking || chat.id === activeChatId) return
     setActiveChatId(chat.id)
     setMessages(chat.messages)
+    setAssistantMode(chat.assistantMode || 'qa')
     setQuestion('')
   }
 
@@ -485,6 +499,7 @@ function App() {
     if (activeChatId === chat.id) {
       setActiveChatId(remaining[0]?.id || null)
       setMessages(remaining[0]?.messages || [])
+      setAssistantMode(remaining[0]?.assistantMode || 'qa')
       setQuestion('')
     }
   }
@@ -753,9 +768,13 @@ function App() {
         <section className="chat-card">
           <div className="chat-head">
             <div className="ai-avatar" aria-hidden="true">AI</div>
-            <div>
-              <div className="chat-title-line"><strong>手册问答</strong><button className="info-button" type="button" aria-label="查看检索规则" onClick={() => setRetrievalInfoOpen(true)}>检索规则&nbsp;?</button></div>
-              <span><i /> {activeDocName ? `当前只查：${activeDocName}` : '依据全部已索引资料回答'}</span>
+            <div className="chat-head-copy">
+              <div className="chat-title-line"><strong>{assistantMode === 'engineering' ? '工程助手' : '手册问答'}</strong><button className="info-button" type="button" aria-label="查看检索规则" onClick={() => setRetrievalInfoOpen(true)}>检索规则&nbsp;?</button></div>
+              <div className="mode-switch" role="tablist" aria-label="回答模式">
+                <button type="button" role="tab" aria-selected={assistantMode === 'qa'} className={assistantMode === 'qa' ? 'active' : ''} disabled={asking} onClick={() => changeAssistantMode('qa')}>手册问答</button>
+                <button type="button" role="tab" aria-selected={assistantMode === 'engineering'} className={assistantMode === 'engineering' ? 'active' : ''} disabled={asking} onClick={() => changeAssistantMode('engineering')}>工程助手</button>
+              </div>
+              <span><i /> {activeDocName ? `当前只查：${activeDocName}` : assistantMode === 'engineering' ? '基于手册生成接线与配置方案' : '依据全部已索引资料回答'}</span>
             </div>
             {activeDocName && <button className="clear-filter" type="button" onClick={() => setSelectedDoc(null)}>取消限定</button>}
           </div>
@@ -765,7 +784,7 @@ function App() {
               <>
                 <div className="message ai-message">
                   <p>你好，我已经连接到当前的芯片资料库。</p>
-                  <p>你可以问寄存器、引脚、时序或板级连接问题，我会同时给出手册页码。</p>
+                  <p>{assistantMode === 'engineering' ? '工程助手会把问题整理成接线、元件、配置和风险清单，并标出手册页码。' : '你可以问寄存器、引脚、时序或板级连接问题，我会同时给出手册页码。'}</p>
                 </div>
                 <div className="suggestions" aria-label="示例问题">
                   {suggestions.map((item) => <button type="button" key={item} onClick={() => askQuestion(item)}>{item}</button>)}
@@ -862,7 +881,7 @@ function App() {
               <li><strong>相关性排序</strong><span>综合语义相似度、关键词命中、寄存器名称和正文/表格类型，选出最相关的资料。</span></li>
               <li><strong>生成回答</strong><span>把检索到的手册片段交给本地模型组织答案，并标出对应文档和页码。</span></li>
             </ol>
-            <p className="settings-tip">RAG 的全称是 Retrieval-Augmented Generation，即“检索增强生成”。答案只应以已检索到的手册内容为依据。</p>
+            <p className="settings-tip">RAG 的全称是 Retrieval-Augmented Generation，即“检索增强生成”。答案只应以已检索到的手册内容为依据；切换到工程助手后，会在同样的依据上进一步整理接线、配置和风险。</p>
           </section>
         </div>
       )}
