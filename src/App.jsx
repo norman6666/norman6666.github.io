@@ -11,6 +11,7 @@ const CHAT_HISTORY_KEY = 'xinwen_chat_history_v1'
 const PUBLIC_API_URL = (import.meta.env.VITE_PUBLIC_API_URL || '').replace(/\/$/, '')
 const PUBLIC_UPLOAD_LIMIT_MB = 30
 const MAX_SAVED_CHATS = 20
+const MAX_CONTEXT_MESSAGES = 32
 const suggestionPool = [
   'TIM1 怎么设置互补 PWM 和死区？',
   '这块开发板的晶振接在哪些引脚？',
@@ -369,10 +370,16 @@ function App() {
     setQuestion('')
     setAsking(true)
     try {
+      const history = messages
+        .slice(-MAX_CONTEXT_MESSAGES)
+        .map(({ role, content }) => ({
+          role,
+          content: content.slice(-4000),
+        }))
       const payload = await request('/api/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: cleanQuestion, doc_id: selectedDoc, top_k: 5 }),
+        body: JSON.stringify({ question: cleanQuestion, doc_id: selectedDoc, top_k: 5, history }),
       })
       const answeredMessages = [...pendingMessages, {
         id: crypto.randomUUID(),
