@@ -203,6 +203,8 @@ function normalizeMarkdownTables(content) {
   return content
     .replace(/\|\s*\|(?=\s*:?-{3,})/g, '|\n|')
     .replace(/\|\s*(?=\d+\s*\|)/g, '\n|')
+    // 表格分隔线和数据行之间不允许空行，否则 GFM 会提前结束表格。
+    .replace(/(\|\s*:?-{3,}[^\n]*\|)\n(?:\s*\n)+(?=\s*\|)/g, '$1\n')
 }
 
 function evidencePageSummary(sources = []) {
