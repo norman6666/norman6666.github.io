@@ -458,6 +458,7 @@ function App() {
           content: cleanPdfText(source.content),
         })),
         mode: payload.mode,
+        evidence: payload.evidence,
       }]
       setMessages(answeredMessages)
       saveChatMessages(conversationId, answeredMessages)
@@ -841,8 +842,17 @@ function App() {
 
             {messages.map((message) => {
               const evidence = splitEvidenceSources(message.content, message.sources || [])
+              const retrievedCount = message.evidence?.retrieved_count || message.sources?.length || 0
               return (
               <article className={`message-row ${message.role}`} key={message.id}>
+                {message.role === 'assistant' && !message.error && retrievedCount > 0 && (
+                  <div className={`evidence-strip ${evidence.citedCount ? '' : 'warning'}`}>
+                    <strong>RAG 证据链</strong>
+                    <span>检索 {retrievedCount} 条</span>
+                    <span>实际引用 {evidence.citedCount} 条</span>
+                    <span>{evidence.citedCount ? '点击引用可查看原文' : '本次未形成可核验引用'}</span>
+                  </div>
+                )}
                 <div className={`message ${message.error ? 'error-message' : ''} ${message.role === 'assistant' && !message.error ? 'markdown-message' : ''}`}>
                   {message.role === 'assistant' && !message.error ? (
                     <ReactMarkdown
