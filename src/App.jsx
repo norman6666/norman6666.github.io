@@ -105,6 +105,56 @@ function titleFromQuestion(question) {
   return oneLine.length > 22 ? `${oneLine.slice(0, 22)}…` : oneLine
 }
 
+const pdfBulletPattern = /^(?:[•●▪◦○·*+-]|\d+[.)])\s*/
+const pdfSectionPattern = /^(?:\d+(?:\.\d+)+|(?:table|figure)\s+\d+)[.)]?\s+/i
+
+function isPdfBoilerplate(line, index) {
+  if (index >= 8) return false
+  return /^[A-Z]{2,}\d+\s+Rev(?:ision)?\s+\d+$/i.test(line)
+    || /^\d+\s*\/\s*\d+$/.test(line)
+    || (/^STM32[A-Z0-9xX, ]+$/.test(line) && line.includes(','))
+    || /^\d{1,4}$/.test(line)
+}
+
+function isStructuralPdfLine(line) {
+  return pdfBulletPattern.test(line)
+    || pdfSectionPattern.test(line)
+    || /^(?:table|figure)\b/i.test(line)
+}
+
+function canJoinPdfLines(previous, current) {
+  if (!previous || !current || isStructuralPdfLine(previous) || isStructuralPdfLine(current)) return false
+  if (/[。！？.!?;；:：]$/.test(previous)) return false
+  if (/^[a-z0-9(["'“‘]/.test(current)) return true
+  return /(?:\band|or|the|of|to|for|with|in|on|by|from|as|via|与|和|及|的|为|在|以及)\s*$/i.test(previous)
+}
+
+function cleanPdfText(value) {
+  if (typeof value !== 'string') return ''
+  const lines = value
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .replace(/[\u00a0\u200b]/g, ' ')
+    .split('\n')
+    .map((line) => line.replace(/[ \t]+/g, ' ').trim())
+    .filter((line, index) => !isPdfBoilerplate(line, index))
+
+  const cleaned = []
+  for (const line of lines) {
+    if (!line) {
+      if (cleaned.length && cleaned.at(-1) !== '') cleaned.push('')
+      continue
+    }
+    if (cleaned.length && cleaned.at(-1) !== '' && canJoinPdfLines(cleaned.at(-1), line)) {
+      cleaned[cleaned.length - 1] = `${cleaned.at(-1)} ${line}`.trim()
+    } else {
+      cleaned.push(line)
+    }
+  }
+  while (cleaned.at(-1) === '') cleaned.pop()
+  return cleaned.join('\n')
+}
+
 function formatChatTime(timestamp) {
   const date = new Date(timestamp)
   const today = new Date()
@@ -293,7 +343,10 @@ function App() {
         id: crypto.randomUUID(),
         role: 'assistant',
         content: payload.answer,
-        sources: payload.sources || [],
+        sources: (payload.sources || []).map((source) => ({
+          ...source,
+          content: cleanPdfText(source.content),
+        })),
         mode: payload.mode,
       }]
       setMessages(answeredMessages)
@@ -641,7 +694,7 @@ function App() {
                               <strong>检索到的手册原文</strong>
                               <span>第 {source.page} 页</span>
                             </div>
-                            <p>{source.content || '这条依据暂时没有可显示的原文。'}</p>
+                            <p>{cleanPdfText(source.content) || '这条依据暂时没有可显示的原文。'}</p>
                           </div>
                         </details>
                       ))}
