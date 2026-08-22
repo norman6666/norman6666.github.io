@@ -850,8 +850,8 @@ button:focus-visible, textarea:focus-visible { outline: 3px solid rgba(45, 140, 
 .retrieval-steps strong, .retrieval-steps span { display: block; min-width: 0; }
 .retrieval-steps li > strong,
 .retrieval-steps li > span { grid-column: 2; }
-.retrieval-steps strong { color: var(--ink); font-size: 15px; }
-.retrieval-steps span { margin-top: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.retrieval-steps strong { color: var(--ink); font-size: 15px; line-height: 1.1; }
+.retrieval-steps span { margin-top: -3px; color: var(--muted); font-size: 13px; line-height: 1.45; }
 .retrieval-modal .settings-tip { margin-top: 16px; font-size: 12px; }
 .save-settings {
   width: 100%;
