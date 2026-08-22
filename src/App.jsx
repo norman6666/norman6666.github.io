@@ -180,6 +180,18 @@ function evidencePageSummary(sources = []) {
   return pages.length ? ` · 第 ${pages.join('、')} 页` : ''
 }
 
+function splitEvidenceSources(content, sources = []) {
+  const citedIndices = new Set(
+    [...(content || '').matchAll(/\[(\d{1,2})\]/g)]
+      .map((match) => Number(match[1]))
+      .filter((index) => Number.isInteger(index) && index >= 1 && index <= sources.length),
+  )
+  const items = sources
+    .map((source, index) => ({ source, index, cited: citedIndices.has(index + 1) }))
+    .sort((left, right) => Number(right.cited) - Number(left.cited) || left.index - right.index)
+  return { citedCount: citedIndices.size, relatedCount: sources.length - citedIndices.size, items }
+}
+
 function MarkdownEvidenceLink({ href, children, title, ...props }) {
   if (!href?.startsWith('#evidence-')) {
     return <a href={href} target="_blank" rel="noreferrer" {...props}>{children}</a>
@@ -757,7 +769,9 @@ function App() {
               </>
             )}
 
-            {messages.map((message) => (
+            {messages.map((message) => {
+              const evidence = splitEvidenceSources(message.content, message.sources || [])
+              return (
               <article className={`message-row ${message.role}`} key={message.id}>
                 <div className={`message ${message.error ? 'error-message' : ''} ${message.role === 'assistant' && !message.error ? 'markdown-message' : ''}`}>
                   {message.role === 'assistant' && !message.error ? (
@@ -772,10 +786,18 @@ function App() {
                 </div>
                   {!!message.sources?.length && (
                   <details className="source-panel">
-                    <summary>{message.sources.length} 条手册依据<span className="source-pages">{evidencePageSummary(message.sources)}</span></summary>
+                    <summary>
+                      已引用依据 {evidence.citedCount} 条
+                      {evidence.relatedCount > 0 && <span className="source-pages"> · 其他相关检索结果 {evidence.relatedCount} 条</span>}
+                      <span className="source-pages">{evidencePageSummary(message.sources)}</span>
+                    </summary>
                     <div className="source-list">
-                      {message.sources.map((source, index) => (
-                        <details id={`evidence-${message.id}-${index + 1}`} className="source-item" key={`${source.doc_id}-${source.page}-${index}`}>
+                      {evidence.items.map(({ source, index, cited }, orderedIndex, orderedItems) => (
+                        <div className="source-entry" key={`${source.doc_id}-${source.page}-${index}`}>
+                          {(!orderedIndex || cited !== orderedItems[orderedIndex - 1].cited) && (
+                            <div className="source-group-title">{cited ? '答案实际引用' : '其他相关检索结果'}</div>
+                          )}
+                        <details id={`evidence-${message.id}-${index + 1}`} className={`source-item ${cited ? 'source-used' : 'source-related'}`}>
                           <summary className="source-summary">
                             <span className="source-index">{index + 1}</span>
                             <span className="source-meta">
@@ -796,12 +818,14 @@ function App() {
                             <p>{cleanPdfText(source.content) || '这条依据暂时没有可显示的原文。'}</p>
                           </div>
                         </details>
+                        </div>
                       ))}
                     </div>
                   </details>
                 )}
               </article>
-            ))}
+              )
+            })}
 
             {asking && <div className="thinking" aria-label={`正在查询手册，已用时 ${searchElapsed} 秒`}><span /><span /><span />正在查手册 · 已用时 {searchElapsed} 秒</div>}
           </div>
