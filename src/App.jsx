@@ -674,7 +674,7 @@ function App() {
 
             {messages.map((message) => (
               <article className={`message-row ${message.role}`} key={message.id}>
-                <div className={`message ${message.error ? 'error-message' : ''}`}>
+                <div className={`message ${message.error ? 'error-message' : ''} ${message.role === 'assistant' && !message.error ? 'markdown-message' : ''}`}>
                   {message.role === 'assistant' && !message.error ? (
                     <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
                       {message.content}
