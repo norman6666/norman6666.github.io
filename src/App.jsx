@@ -724,7 +724,7 @@ function App() {
 
       <section className="workspace">
         <header className="topbar">
-          <div><p className="eyebrow">EMBEDDED KNOWLEDGE ASSISTANT</p><h1>让芯片手册，<em>开口回答。</em></h1><div className="rag-highlight"><span>核心特色 · RAG</span><strong>不是只聊天，而是先查手册，再给出有依据的回答</strong><small>检索增强生成（Retrieval-Augmented Generation，RAG）技术</small></div></div>
+          <div><p className="eyebrow">EMBEDDED KNOWLEDGE ASSISTANT</p><h1>让芯片手册，<em>开口回答。</em></h1><div className="rag-highlight"><span>核心特色 · RAG</span><strong>检索增强生成<br /><small>（Retrieval-Augmented Generation，RAG）技术</small></strong></div></div>
           <div className="topbar-actions">
             <button className={`admin-entry ${adminToken ? 'verified' : ''}`} type="button" onClick={openAdminPanel}>
               <span aria-hidden="true">◇</span>{adminToken ? '管理知识库' : '管理员验证'}
