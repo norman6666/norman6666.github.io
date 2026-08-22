@@ -180,7 +180,7 @@ function App() {
     return loadDocumentsAt(apiUrl)
   }, [apiUrl, loadDocumentsAt])
 
-  const checkService = useCallback(async () => {
+  const checkService = useCallback(async ({ keepChecking = false } = {}) => {
     let activeBase = apiUrl
     let state
     try {
@@ -194,11 +194,11 @@ function App() {
           setApiUrl(activeBase)
           setDraftApiUrl(activeBase)
         } catch {
-          setHealth({ status: 'offline', documents: 0, generator: 'retrieval_only' })
+          setHealth({ status: keepChecking ? 'checking' : 'offline', documents: 0, generator: 'retrieval_only' })
           return
         }
       } else {
-        setHealth({ status: 'offline', documents: 0, generator: 'retrieval_only' })
+        setHealth({ status: keepChecking ? 'checking' : 'offline', documents: 0, generator: 'retrieval_only' })
         return
       }
     }
@@ -212,9 +212,17 @@ function App() {
   }, [apiUrl, requestAt, loadDocumentsAt])
 
   useEffect(() => {
-    checkService()
-    const timer = window.setInterval(checkService, 30000)
-    return () => window.clearInterval(timer)
+    checkService({ keepChecking: true })
+    const retryDelays = [1500, 3500, 7000]
+    const retryTimers = retryDelays.map((delay, index) => window.setTimeout(
+      () => checkService({ keepChecking: index < retryDelays.length - 1 }),
+      delay,
+    ))
+    const timer = window.setInterval(() => checkService(), 30000)
+    return () => {
+      retryTimers.forEach((retryTimer) => window.clearTimeout(retryTimer))
+      window.clearInterval(timer)
+    }
   }, [checkService])
 
   useEffect(() => {
