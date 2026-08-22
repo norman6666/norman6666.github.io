@@ -197,14 +197,21 @@ function linkEvidenceCitations(content, messageId, sources = []) {
 
 function normalizeMarkdownTables(content) {
   if (!content || !content.includes('|')) return content
-  // Qwen 偶尔会把表头、分隔线和第一行压到同一行；先恢复最基本的 Markdown 表格换行。
-  const hasSeparator = /\|\s*:?-{3,}\s*\|/.test(content)
+  // Qwen 偶尔会把换行输出成字面量 \n，或把整张表压到一行；先恢复真实换行。
+  let normalized = content
+    .replace(/\\r\\n/g, '\n')
+    .replace(/\\n/g, '\n')
+  const hasSeparator = /\|\s*:?-{3,}\s*\|/.test(normalized)
   if (!hasSeparator) return content
-  return content
+  // 表头和分隔线之间可能多了一个空的单元格分隔符。
+  normalized = normalized
     .replace(/\|\s*\|(?=\s*:?-{3,})/g, '|\n|')
     .replace(/\|\s*(?=\d+\s*\|)/g, '\n|')
+    // 识别常见芯片信号名开头的数据行，避免把 PWM 等普通单元格误拆成新行。
+    .replace(/\|\s*(?=(?:(?:TIM|GPIO|NRST|VDD|VSS|VDDA|OSC|PA|PB|PC|PD|PE|PF|PH)[A-Za-z0-9_]*|\d+)\s*(?:\(|\/|\|)/g, '\n|')
     // 表格分隔线和数据行之间不允许空行，否则 GFM 会提前结束表格。
     .replace(/(\|\s*:?-{3,}[^\n]*\|)\n(?:\s*\n)+(?=\s*\|)/g, '$1\n')
+  return normalized
 }
 
 function evidencePageSummary(sources = []) {
