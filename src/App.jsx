@@ -159,6 +159,29 @@ function cleanPdfText(value) {
   return cleaned.join('\n')
 }
 
+function linkEvidenceCitations(content, messageId, sources = []) {
+  if (!content || !sources.length) return content
+  return content.replace(/\[(\d{1,2})\]/g, (match, number) => {
+    const index = Number(number)
+    if (!Number.isInteger(index) || index < 1 || index > sources.length) return match
+    return `[${index}](#evidence-${messageId}-${index})`
+  })
+}
+
+function MarkdownEvidenceLink({ href, children, ...props }) {
+  if (!href?.startsWith('#evidence-')) {
+    return <a href={href} target="_blank" rel="noreferrer" {...props}>{children}</a>
+  }
+  function openEvidence(event) {
+    event.preventDefault()
+    const target = document.getElementById(href.slice(1))
+    if (!target) return
+    target.open = true
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  }
+  return <a href={href} className="evidence-ref" title="查看对应手册依据" onClick={openEvidence} {...props}>{children}</a>
+}
+
 function formatChatTime(timestamp) {
   const date = new Date(timestamp)
   const today = new Date()
@@ -193,6 +216,7 @@ function App() {
   const [adminLoading, setAdminLoading] = useState(false)
   const [adminError, setAdminError] = useState('')
   const [deletingDoc, setDeletingDoc] = useState('')
+  const [renamingDoc, setRenamingDoc] = useState('')
   const [toast, setToast] = useState('')
   const fileInputRef = useRef(null)
   const conversationRef = useRef(null)
@@ -540,6 +564,35 @@ function App() {
     }
   }
 
+  async function renameAdminDocument(doc) {
+    if (renamingDoc || deletingDoc) return
+    const nextName = window.prompt('输入新的文件名（不需要填写扩展名）', doc.name)?.trim()
+    if (!nextName || nextName === doc.name) return
+
+    setRenamingDoc(doc.id)
+    setAdminError('')
+    try {
+      const payload = await request(`/api/admin/documents/${encodeURIComponent(doc.id)}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Admin-Token': adminToken,
+        },
+        body: JSON.stringify({ name: nextName }),
+      })
+      setToast(`${payload.document?.name || nextName} 已重命名`)
+      await Promise.all([loadAdminDocuments(adminToken), loadDocuments(), checkService()])
+    } catch (error) {
+      setAdminError(error.message)
+      if (error.status === 401) {
+        setAdminToken('')
+        setAdminDocuments([])
+      }
+    } finally {
+      setRenamingDoc('')
+    }
+  }
+
   function logoutAdmin() {
     setAdminToken('')
     setAdminDocuments([])
@@ -676,8 +729,12 @@ function App() {
               <article className={`message-row ${message.role}`} key={message.id}>
                 <div className={`message ${message.error ? 'error-message' : ''} ${message.role === 'assistant' && !message.error ? 'markdown-message' : ''}`}>
                   {message.role === 'assistant' && !message.error ? (
-                    <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
-                      {message.content}
+                    <ReactMarkdown
+                      remarkPlugins={[remarkMath]}
+                      rehypePlugins={[rehypeKatex]}
+                      components={{ a: MarkdownEvidenceLink }}
+                    >
+                      {linkEvidenceCitations(message.content, message.id, message.sources)}
                     </ReactMarkdown>
                   ) : message.content}
                 </div>
@@ -686,7 +743,7 @@ function App() {
                     <summary>{message.sources.length} 条手册依据</summary>
                     <div className="source-list">
                       {message.sources.map((source, index) => (
-                        <details className="source-item" key={`${source.doc_id}-${source.page}-${index}`}>
+                        <details id={`evidence-${message.id}-${index + 1}`} className="source-item" key={`${source.doc_id}-${source.page}-${index}`}>
                           <summary className="source-summary">
                             <span className="source-index">{index + 1}</span>
                             <span className="source-meta">
@@ -795,17 +852,27 @@ function App() {
                       <span className="admin-file-icon" aria-hidden="true">PDF</span>
                       <div className="admin-doc-copy">
                         <strong>{doc.name}</strong>
-                        <small>{doc.pages} 页 · {formatFileSize(doc.size_bytes)}</small>
+                        <small>{doc.filename || doc.name} · {doc.pages} 页 · {formatFileSize(doc.size_bytes)}</small>
                         <span>{doc.source === 'uploaded' ? '用户上传' : '预置资料'}</span>
                       </div>
-                      <button
-                        className="delete-doc"
-                        type="button"
-                        disabled={Boolean(deletingDoc)}
-                        onClick={() => deleteAdminDocument(doc)}
-                      >
-                        {deletingDoc === doc.id ? '处理中…' : '移出'}
-                      </button>
+                      <div className="admin-doc-actions">
+                        <button
+                          className="rename-doc"
+                          type="button"
+                          disabled={Boolean(deletingDoc || renamingDoc)}
+                          onClick={() => renameAdminDocument(doc)}
+                        >
+                          {renamingDoc === doc.id ? '处理中…' : '重命名'}
+                        </button>
+                        <button
+                          className="delete-doc"
+                          type="button"
+                          disabled={Boolean(deletingDoc || renamingDoc)}
+                          onClick={() => deleteAdminDocument(doc)}
+                        >
+                          {deletingDoc === doc.id ? '处理中…' : '移出'}
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>
