@@ -588,6 +588,34 @@ h1 em { color: var(--mint-deep); font-style: normal; }
   overflow-y: hidden;
 }
 .message .katex { font-size: 1.03em; }
+.message table {
+  width: 100%;
+  margin: 10px 0;
+  overflow: hidden;
+  border: 1px solid rgba(16, 43, 52, 0.1);
+  border-radius: 12px;
+  border-spacing: 0;
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 0.92em;
+}
+.message th,
+.message td {
+  padding: 7px 9px;
+  border-right: 1px solid rgba(16, 43, 52, 0.07);
+  border-bottom: 1px solid rgba(16, 43, 52, 0.07);
+  text-align: left;
+  vertical-align: top;
+}
+.message th:last-child,
+.message td:last-child { border-right: 0; }
+.message tr:last-child td { border-bottom: 0; }
+.message th {
+  color: var(--ink);
+  background: rgba(152, 215, 197, 0.2);
+  font-weight: 750;
+}
+.message td { color: #36565d; }
+.message table code { white-space: nowrap; }
 .suggestions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
 .suggestions button {
   padding: 9px 13px;
