@@ -340,6 +340,13 @@ h1 {
   letter-spacing: -0.04em;
 }
 h1 em { color: var(--mint-deep); font-style: normal; }
+.hero-description {
+  max-width: 570px;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.7;
+}
 .round-button {
   width: 48px;
   height: 48px;
@@ -449,6 +456,22 @@ h1 em { color: var(--mint-deep); font-style: normal; }
 .chat-head strong { color: var(--ink); font-size: 13px; }
 .chat-head span { margin-top: 4px; color: var(--muted); font-size: 10px; }
 .chat-head i { display: inline-block; width: 6px; height: 6px; margin-right: 5px; border-radius: 50%; background: var(--mint-deep); }
+.chat-title-line { display: flex; align-items: center; gap: 6px; }
+.chat-title-line strong { display: inline; }
+.info-button {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid rgba(45, 140, 121, 0.28);
+  border-radius: 50%;
+  color: var(--mint-deep);
+  background: rgba(152, 215, 197, 0.12);
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 14px;
+  cursor: pointer;
+}
+.info-button:hover { background: rgba(152, 215, 197, 0.28); }
 .clear-filter {
   margin-left: auto;
   padding: 7px 11px;
@@ -787,6 +810,30 @@ button:focus-visible, textarea:focus-visible { outline: 3px solid rgba(45, 140, 
 }
 .settings-modal input:focus { border-color: rgba(45, 140, 121, 0.42); box-shadow: 0 0 0 3px rgba(45, 140, 121, 0.1); }
 .settings-tip { margin: 16px 0; color: var(--muted); font-size: 10px; line-height: 1.6; }
+.retrieval-modal { width: min(520px, 100%); }
+.retrieval-steps { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; counter-reset: retrieval-step; }
+.retrieval-steps li {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 9px;
+  align-items: start;
+  counter-increment: retrieval-step;
+}
+.retrieval-steps li::before {
+  content: counter(retrieval-step);
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 9px;
+  color: #f3fffb;
+  background: var(--mint-deep);
+  font-size: 10px;
+  font-weight: 800;
+}
+.retrieval-steps strong, .retrieval-steps span { display: block; }
+.retrieval-steps strong { color: var(--ink); font-size: 12px; }
+.retrieval-steps span { margin-top: 3px; color: var(--muted); font-size: 10px; line-height: 1.65; }
 .save-settings {
   width: 100%;
   padding: 12px 16px;
