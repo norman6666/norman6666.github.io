@@ -33,11 +33,29 @@ const suggestionPool = [
   '定时器编码器模式应该怎么配置？',
   '这块开发板的按键和 LED 接在哪些引脚？',
 ]
+const engineeringSuggestionPool = [
+  '我要用 TIM1 驱动半桥，CH1/CH1N 和死区怎么接线？',
+  '这块开发板的电源、VDDA、VCAP 应该怎样连接？',
+  '外部晶振、负载电容和 STM32 引脚怎么连接？',
+  'NRST 复位按键、上拉电阻和调试接口怎么接？',
+  '这块板的 USB、串口和 JTAG/SWD 分别接哪些引脚？',
+  'W25Q16 外部 Flash 怎样连接到 SPI1？',
+  'I²C 传感器的 SCL、SDA 上拉电阻怎么连接？',
+  'ADC 模拟输入前端需要哪些滤波和接地连接？',
+  'BOOT0 和 BOOT1 启动电阻应该怎样接？',
+  'STM32F407 与 CAN 收发器之间需要连接哪些信号？',
+  '调试下载接口的 SWDIO、SWCLK、NRST 怎么连接？',
+  'PWM 输出接电机驱动器时需要检查哪些连接和保护？',
+  '板上的 LED、按键和扩展排针分别连接到哪些引脚？',
+  'USB D+、D− 周围的电阻和接口应该怎样连接？',
+  '定时器编码器模式的 CH1、CH2 输入如何布线？',
+  '芯片各个电源引脚旁边的去耦电容如何布置？',
+]
 
-function createRandomSuggestions(previous = []) {
+function createRandomSuggestions(previous = [], pool = suggestionPool) {
   let selection = []
   for (let attempt = 0; attempt < 5; attempt += 1) {
-    const shuffled = [...suggestionPool]
+    const shuffled = [...pool]
     const randomValues = new Uint32Array(shuffled.length)
     crypto.getRandomValues(randomValues)
     for (let index = shuffled.length - 1; index > 0; index -= 1) {
@@ -229,9 +247,12 @@ function App() {
   const [chatHistory, setChatHistory] = useState(initialChats)
   const [activeChatId, setActiveChatId] = useState(initialChats[0]?.id || null)
   const [messages, setMessages] = useState(initialChats[0]?.messages || [])
-  const [suggestions, setSuggestions] = useState(createRandomSuggestions)
   const [question, setQuestion] = useState('')
   const [assistantMode, setAssistantMode] = useState(initialChats[0]?.assistantMode || 'qa')
+  const [suggestions, setSuggestions] = useState(() => createRandomSuggestions(
+    [],
+    initialChats[0]?.assistantMode === 'engineering' ? engineeringSuggestionPool : suggestionPool,
+  ))
   const [asking, setAsking] = useState(false)
   const [searchStartedAt, setSearchStartedAt] = useState(0)
   const [searchElapsed, setSearchElapsed] = useState(0)
@@ -455,7 +476,8 @@ function App() {
 
   function startNewChat() {
     if (asking) return
-    const nextSuggestions = createRandomSuggestions(suggestions)
+    const pool = assistantMode === 'engineering' ? engineeringSuggestionPool : suggestionPool
+    const nextSuggestions = createRandomSuggestions(suggestions, pool)
     setActiveChatId(null)
     setMessages([])
     setQuestion('')
@@ -465,6 +487,10 @@ function App() {
   function changeAssistantMode(nextMode) {
     if (asking || nextMode === assistantMode) return
     setAssistantMode(nextMode)
+    setSuggestions(createRandomSuggestions(
+      suggestions,
+      nextMode === 'engineering' ? engineeringSuggestionPool : suggestionPool,
+    ))
     if (activeChatId) {
       setChatHistory((current) => current.map((chat) => (
         chat.id === activeChatId ? { ...chat, assistantMode: nextMode } : chat
@@ -477,6 +503,10 @@ function App() {
     setActiveChatId(chat.id)
     setMessages(chat.messages)
     setAssistantMode(chat.assistantMode || 'qa')
+    setSuggestions(createRandomSuggestions(
+      suggestions,
+      chat.assistantMode === 'engineering' ? engineeringSuggestionPool : suggestionPool,
+    ))
     setQuestion('')
   }
 
@@ -500,6 +530,10 @@ function App() {
       setActiveChatId(remaining[0]?.id || null)
       setMessages(remaining[0]?.messages || [])
       setAssistantMode(remaining[0]?.assistantMode || 'qa')
+      setSuggestions(createRandomSuggestions(
+        suggestions,
+        remaining[0]?.assistantMode === 'engineering' ? engineeringSuggestionPool : suggestionPool,
+      ))
       setQuestion('')
     }
   }
