@@ -236,6 +236,7 @@ function App() {
   const [uploading, setUploading] = useState(false)
   const [dragging, setDragging] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
+  const [retrievalInfoOpen, setRetrievalInfoOpen] = useState(false)
   const [adminOpen, setAdminOpen] = useState(false)
   const [adminPassword, setAdminPassword] = useState('')
   const [adminToken, setAdminToken] = useState('')
@@ -723,7 +724,7 @@ function App() {
 
       <section className="workspace">
         <header className="topbar">
-          <div><p className="eyebrow">EMBEDDED KNOWLEDGE ASSISTANT</p><h1>让芯片手册，<em>开口回答。</em></h1></div>
+          <div><p className="eyebrow">EMBEDDED KNOWLEDGE ASSISTANT</p><h1>让芯片手册，<em>开口回答。</em></h1><p className="hero-description">基于检索增强生成（Retrieval-Augmented Generation，RAG）技术，先检索手册，再组织回答。</p></div>
           <div className="topbar-actions">
             <button className={`admin-entry ${adminToken ? 'verified' : ''}`} type="button" onClick={openAdminPanel}>
               <span aria-hidden="true">◇</span>{adminToken ? '管理知识库' : '管理员验证'}
@@ -752,7 +753,10 @@ function App() {
         <section className="chat-card">
           <div className="chat-head">
             <div className="ai-avatar" aria-hidden="true">AI</div>
-            <div><strong>手册问答</strong><span><i /> {activeDocName ? `当前只查：${activeDocName}` : '依据全部已索引资料回答'}</span></div>
+            <div>
+              <div className="chat-title-line"><strong>手册问答</strong><button className="info-button" type="button" aria-label="查看检索规则" onClick={() => setRetrievalInfoOpen(true)}>?</button></div>
+              <span><i /> {activeDocName ? `当前只查：${activeDocName}` : '依据全部已索引资料回答'}</span>
+            </div>
             {activeDocName && <button className="clear-filter" type="button" onClick={() => setSelectedDoc(null)}>取消限定</button>}
           </div>
 
@@ -844,6 +848,24 @@ function App() {
           </form>
         </section>
       </section>
+
+      {retrievalInfoOpen && (
+        <div className="modal-backdrop" role="presentation" onMouseDown={() => setRetrievalInfoOpen(false)}>
+          <section className="settings-modal retrieval-modal" role="dialog" aria-modal="true" aria-labelledby="retrieval-title" onMouseDown={(event) => event.stopPropagation()}>
+            <div className="modal-head">
+              <div><p>HOW RAG WORKS</p><h2 id="retrieval-title">检索规则说明</h2></div>
+              <button type="button" aria-label="关闭检索规则" onClick={() => setRetrievalInfoOpen(false)}>×</button>
+            </div>
+            <ol className="retrieval-steps">
+              <li><strong>理解问题</strong><span>识别芯片型号、外设、寄存器和关键词；连续追问时会参考前面的对话。</span></li>
+              <li><strong>混合检索</strong><span>同时使用向量检索和关键词检索，在已索引的芯片手册中查找相关片段。</span></li>
+              <li><strong>相关性排序</strong><span>综合语义相似度、关键词命中、寄存器名称和正文/表格类型，选出最相关的资料。</span></li>
+              <li><strong>生成回答</strong><span>把检索到的手册片段交给本地模型组织答案，并标出对应文档和页码。</span></li>
+            </ol>
+            <p className="settings-tip">RAG 的全称是 Retrieval-Augmented Generation，即“检索增强生成”。答案只应以已检索到的手册内容为依据。</p>
+          </section>
+        </div>
+      )}
 
       {settingsOpen && (
         <div className="modal-backdrop" role="presentation" onMouseDown={() => setSettingsOpen(false)}>
