@@ -449,6 +449,7 @@ h1 em { color: var(--mint-deep); font-style: normal; }
   box-shadow: 0 22px 60px rgba(39, 67, 72, 0.08);
 }
 .chat-head { gap: 12px; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+.chat-head-copy { min-width: 0; flex: 1; }
 .ai-avatar {
   display: grid;
   place-items: center;
@@ -467,6 +468,29 @@ h1 em { color: var(--mint-deep); font-style: normal; }
 .chat-head i { display: inline-block; width: 6px; height: 6px; margin-right: 5px; border-radius: 50%; background: var(--mint-deep); }
 .chat-title-line { display: flex; align-items: center; gap: 6px; }
 .chat-title-line strong { display: inline; }
+.mode-switch {
+  display: inline-flex;
+  gap: 3px;
+  margin-top: 7px;
+  padding: 3px;
+  border-radius: 99px;
+  background: rgba(16, 43, 52, 0.055);
+}
+.mode-switch button {
+  padding: 4px 9px;
+  border: 0;
+  border-radius: 99px;
+  color: #71878b;
+  background: transparent;
+  font-size: 10px;
+  cursor: pointer;
+}
+.mode-switch button.active {
+  color: #f4fffb;
+  background: var(--mint-deep);
+  box-shadow: 0 3px 8px rgba(45, 140, 121, 0.18);
+}
+.mode-switch button:disabled { cursor: wait; opacity: 0.6; }
 .info-button {
   width: auto;
   height: 22px;
