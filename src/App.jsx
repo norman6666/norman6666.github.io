@@ -162,13 +162,17 @@ function cleanPdfText(value) {
 
 function linkEvidenceCitations(content, messageId, sources = []) {
   if (!content || !sources.length) return content
-  return content.replace(/\[(\d{1,2})\]/g, (match, number) => {
-    const index = Number(number)
-    if (!Number.isInteger(index) || index < 1 || index > sources.length) return match
-    const page = sources[index - 1]?.page
-    const label = page ? `${index}·第${page}页` : `${index}`
-    return `[${label}](#evidence-${messageId}-${index})`
-  })
+  return content.split('\n').map((line) => {
+    const isSummaryLine = /^\s*依据\s*[：:]/.test(line)
+    return line.replace(/\[(\d{1,2})\]/g, (match, number) => {
+      const index = Number(number)
+      if (!Number.isInteger(index) || index < 1 || index > sources.length) return match
+      const page = sources[index - 1]?.page
+      const label = page ? `${index}·第${page}页` : `${index}`
+      const title = isSummaryLine ? ' "summary"' : ''
+      return `[${label}](#evidence-${messageId}-${index}${title})`
+    })
+  }).join('\n')
 }
 
 function evidencePageSummary(sources = []) {
@@ -176,7 +180,7 @@ function evidencePageSummary(sources = []) {
   return pages.length ? ` · 第 ${pages.join('、')} 页` : ''
 }
 
-function MarkdownEvidenceLink({ href, children, ...props }) {
+function MarkdownEvidenceLink({ href, children, title, ...props }) {
   if (!href?.startsWith('#evidence-')) {
     return <a href={href} target="_blank" rel="noreferrer" {...props}>{children}</a>
   }
@@ -187,7 +191,8 @@ function MarkdownEvidenceLink({ href, children, ...props }) {
     target.open = true
     target.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
-  return <a href={href} className="evidence-ref" title="查看对应手册依据" onClick={openEvidence} {...props}>{children}</a>
+  const className = title === 'summary' ? 'evidence-ref evidence-summary-ref' : 'evidence-ref'
+  return <a href={href} className={className} title="查看对应手册依据" onClick={openEvidence} {...props}>{children}</a>
 }
 
 function formatChatTime(timestamp) {
