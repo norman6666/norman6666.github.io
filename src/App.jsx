@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeKatex from 'rehype-katex'
+import remarkGfm from 'remark-gfm'
 import remarkMath from 'remark-math'
 import './App.css'
 import 'katex/dist/katex.min.css'
@@ -192,6 +193,16 @@ function linkEvidenceCitations(content, messageId, sources = []) {
       return `[${label}](#evidence-${messageId}-${index}${title})`
     })
   }).join('\n')
+}
+
+function normalizeMarkdownTables(content) {
+  if (!content || !content.includes('|')) return content
+  // Qwen 偶尔会把表头、分隔线和第一行压到同一行；先恢复最基本的 Markdown 表格换行。
+  const hasSeparator = /\|\s*:?-{3,}\s*\|/.test(content)
+  if (!hasSeparator) return content
+  return content
+    .replace(/\|\s*\|(?=\s*:?-{3,})/g, '|\n|')
+    .replace(/\|\s*(?=\d+\s*\|)/g, '\n|')
 }
 
 function evidencePageSummary(sources = []) {
@@ -833,11 +844,11 @@ function App() {
                 <div className={`message ${message.error ? 'error-message' : ''} ${message.role === 'assistant' && !message.error ? 'markdown-message' : ''}`}>
                   {message.role === 'assistant' && !message.error ? (
                     <ReactMarkdown
-                      remarkPlugins={[remarkMath]}
+                      remarkPlugins={[remarkMath, remarkGfm]}
                       rehypePlugins={[rehypeKatex]}
                       components={{ a: MarkdownEvidenceLink }}
                     >
-                      {linkEvidenceCitations(message.content, message.id, message.sources)}
+                      {normalizeMarkdownTables(linkEvidenceCitations(message.content, message.id, message.sources))}
                     </ReactMarkdown>
                   ) : message.content}
                 </div>
