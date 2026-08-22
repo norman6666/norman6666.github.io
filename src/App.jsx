@@ -724,7 +724,7 @@ function App() {
 
       <section className="workspace">
         <header className="topbar">
-          <div><p className="eyebrow">EMBEDDED KNOWLEDGE ASSISTANT</p><h1>让芯片手册，<em>开口回答。</em></h1><div className="rag-highlight"><span>核心特色 · RAG</span><strong>检索增强生成<br /><small>（Retrieval-Augmented Generation，RAG）技术</small></strong></div></div>
+          <div><p className="eyebrow">EMBEDDED KNOWLEDGE ASSISTANT</p><h1>让芯片手册，<em>开口回答。</em></h1><div className="rag-highlight"><span>核心特色 · RAG</span><strong>检索增强生成（Retrieval-Augmented Generation，RAG）技术</strong></div></div>
           <div className="topbar-actions">
             <button className={`admin-entry ${adminToken ? 'verified' : ''}`} type="button" onClick={openAdminPanel}>
               <span aria-hidden="true">◇</span>{adminToken ? '管理知识库' : '管理员验证'}
@@ -754,7 +754,7 @@ function App() {
           <div className="chat-head">
             <div className="ai-avatar" aria-hidden="true">AI</div>
             <div>
-              <div className="chat-title-line"><strong>手册问答</strong><button className="info-button" type="button" aria-label="查看检索规则" onClick={() => setRetrievalInfoOpen(true)}>?</button></div>
+              <div className="chat-title-line"><strong>手册问答</strong><button className="info-button" type="button" aria-label="查看检索规则" onClick={() => setRetrievalInfoOpen(true)}>检索规则&nbsp;?</button></div>
               <span><i /> {activeDocName ? `当前只查：${activeDocName}` : '依据全部已索引资料回答'}</span>
             </div>
             {activeDocName && <button className="clear-filter" type="button" onClick={() => setSelectedDoc(null)}>取消限定</button>}
