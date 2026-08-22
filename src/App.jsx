@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import ReactMarkdown from 'react-markdown'
+import rehypeKatex from 'rehype-katex'
+import remarkMath from 'remark-math'
 import './App.css'
+import 'katex/dist/katex.min.css'
 
 const API_URL_KEY = 'xinwen_api_url'
 const API_TOKEN_KEY = 'xinwen_api_token'
@@ -670,7 +674,13 @@ function App() {
 
             {messages.map((message) => (
               <article className={`message-row ${message.role}`} key={message.id}>
-                <div className={`message ${message.error ? 'error-message' : ''}`}>{message.content}</div>
+                <div className={`message ${message.error ? 'error-message' : ''}`}>
+                  {message.role === 'assistant' && !message.error ? (
+                    <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
+                      {message.content}
+                    </ReactMarkdown>
+                  ) : message.content}
+                </div>
                 {!!message.sources?.length && (
                   <details className="source-panel">
                     <summary>{message.sources.length} 条手册依据</summary>
