@@ -899,7 +899,7 @@ function App() {
                           </summary>
                           <div className="source-content">
                             <div className="source-content-head">
-                              <strong>检索到的手册原文</strong>
+                              <strong>{source.element_type === 'figure' ? '手册图示摘要' : '检索到的手册原文'}</strong>
                               <span>第 {source.page} 页</span>
                             </div>
                             <p>{cleanPdfText(source.content) || '这条依据暂时没有可显示的原文。'}</p>
