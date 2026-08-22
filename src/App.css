@@ -578,6 +578,13 @@ h1 em { color: var(--mint-deep); font-style: normal; }
 }
 .source-pages { color: #779297; font-size: 11px; }
 .source-list { display: grid; gap: 7px; padding: 0 9px 9px; }
+.source-entry { display: grid; gap: 5px; }
+.source-group-title {
+  padding: 4px 8px 0;
+  color: #6e888d;
+  font-size: 10px;
+  font-weight: 750;
+}
 .source-item {
   overflow: hidden;
   border-radius: 13px;
