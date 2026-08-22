@@ -208,7 +208,7 @@ function normalizeMarkdownTables(content) {
     .replace(/\|\s*\|(?=\s*:?-{3,})/g, '|\n|')
     .replace(/\|\s*(?=\d+\s*\|)/g, '\n|')
     // 识别常见芯片信号名开头的数据行，避免把 PWM 等普通单元格误拆成新行。
-    .replace(/\|\s*(?=(?:(?:TIM|GPIO|NRST|VDD|VSS|VDDA|OSC|PA|PB|PC|PD|PE|PF|PH)[A-Za-z0-9_]*|\d+)\s*(?:\(|\/|\|)/g, '\n|')
+    .replace(/\|\s*(?=(?:(?:TIM|GPIO|NRST|VDD|VSS|VDDA|OSC|PA|PB|PC|PD|PE|PF|PH)[A-Za-z0-9_]*|\d+)\s*(?:\(|\/|\|))/g, '\n|')
     // 表格分隔线和数据行之间不允许空行，否则 GFM 会提前结束表格。
     .replace(/(\|\s*:?-{3,}[^\n]*\|)\n(?:\s*\n)+(?=\s*\|)/g, '$1\n')
   return normalized
