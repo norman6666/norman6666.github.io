@@ -164,8 +164,15 @@ function linkEvidenceCitations(content, messageId, sources = []) {
   return content.replace(/\[(\d{1,2})\]/g, (match, number) => {
     const index = Number(number)
     if (!Number.isInteger(index) || index < 1 || index > sources.length) return match
-    return `[${index}](#evidence-${messageId}-${index})`
+    const page = sources[index - 1]?.page
+    const label = page ? `${index}·第${page}页` : `${index}`
+    return `[${label}](#evidence-${messageId}-${index})`
   })
+}
+
+function evidencePageSummary(sources = []) {
+  const pages = [...new Set(sources.map((source) => source.page).filter(Boolean))]
+  return pages.length ? ` · 第 ${pages.join('、')} 页` : ''
 }
 
 function MarkdownEvidenceLink({ href, children, ...props }) {
@@ -738,9 +745,9 @@ function App() {
                     </ReactMarkdown>
                   ) : message.content}
                 </div>
-                {!!message.sources?.length && (
+                  {!!message.sources?.length && (
                   <details className="source-panel">
-                    <summary>{message.sources.length} 条手册依据</summary>
+                    <summary>{message.sources.length} 条手册依据<span className="source-pages">{evidencePageSummary(message.sources)}</span></summary>
                     <div className="source-list">
                       {message.sources.map((source, index) => (
                         <details id={`evidence-${message.id}-${index + 1}`} className="source-item" key={`${source.doc_id}-${source.page}-${index}`}>
