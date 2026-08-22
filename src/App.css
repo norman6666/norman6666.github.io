@@ -489,11 +489,12 @@ h1 em { color: var(--mint-deep); font-style: normal; }
   display: inline-block;
   margin-left: 2px;
   color: var(--mint-deep);
-  font-size: 0.72em;
+  font-size: 0.76em;
   font-weight: 800;
   line-height: 1;
   text-decoration: none;
   vertical-align: super;
+  white-space: nowrap;
 }
 .message .evidence-ref:hover { color: var(--navy); text-decoration: underline; }
 .message code {
@@ -570,6 +571,7 @@ h1 em { color: var(--mint-deep); font-style: normal; }
   cursor: pointer;
   list-style-position: inside;
 }
+.source-pages { color: #779297; font-size: 11px; }
 .source-list { display: grid; gap: 7px; padding: 0 9px 9px; }
 .source-item {
   overflow: hidden;
