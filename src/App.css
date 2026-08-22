@@ -497,6 +497,11 @@ h1 em { color: var(--mint-deep); font-style: normal; }
   white-space: nowrap;
 }
 .message .evidence-ref:hover { color: var(--navy); text-decoration: underline; }
+.message .evidence-summary-ref {
+  font-size: inherit;
+  line-height: inherit;
+  vertical-align: baseline;
+}
 .message code {
   padding: 2px 5px;
   border-radius: 6px;
