@@ -965,7 +965,7 @@ function App() {
               <li><strong>相关性排序</strong><span>综合语义相似度、关键词命中、寄存器名称和正文/表格类型，选出最相关的资料。</span></li>
               <li><strong>生成回答</strong><span>把检索到的手册片段交给本地模型组织答案，并标出对应文档和页码。</span></li>
             </ol>
-            <p className="settings-tip">RAG 的全称是 Retrieval-Augmented Generation，即“检索增强生成”。答案只应以已检索到的手册内容为依据；切换到工程助手后，会在同样的依据上进一步整理接线、配置和风险。</p>
+            <p className="settings-tip">RAG 的全称是 Retrieval-Augmented Generation，即“检索增强生成”。答案只应以已检索到的手册内容为依据；随后由当前选择的回答引擎（本地 Qwen 或 DeepSeek API）组织答案。切换到工程助手后，会在同样的依据上进一步整理接线、配置和风险。</p>
           </section>
         </div>
       )}
