@@ -102,6 +102,7 @@ function loadSavedChats() {
         title: typeof chat.title === 'string' && chat.title.trim() ? chat.title.trim() : '未命名对话',
         messages: chat.messages.filter((message) => message?.role && typeof message.content === 'string'),
         assistantMode: chat.assistantMode === 'engineering' ? 'engineering' : 'qa',
+        answerProvider: chat.answerProvider === 'deepseek' ? 'deepseek' : 'local',
         createdAt: Number(chat.createdAt) || Date.now(),
         updatedAt: Number(chat.updatedAt) || Date.now(),
       }))
@@ -269,6 +270,7 @@ function App() {
   const [messages, setMessages] = useState(initialChats[0]?.messages || [])
   const [question, setQuestion] = useState('')
   const [assistantMode, setAssistantMode] = useState(initialChats[0]?.assistantMode || 'qa')
+  const [answerProvider, setAnswerProvider] = useState(initialChats[0]?.answerProvider || 'local')
   const [suggestions, setSuggestions] = useState(() => createRandomSuggestions(
     [],
     initialChats[0]?.assistantMode === 'engineering' ? engineeringSuggestionPool : suggestionPool,
@@ -430,6 +432,7 @@ function App() {
         title: titleFromQuestion(cleanQuestion),
         messages: [],
         assistantMode,
+        answerProvider,
         createdAt: now,
         updatedAt: now,
       }, ...current].slice(0, MAX_SAVED_CHATS))
@@ -454,7 +457,7 @@ function App() {
       const payload = await request('/api/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: cleanQuestion, doc_id: selectedDoc, top_k: 5, history, assistant_mode: assistantMode }),
+        body: JSON.stringify({ question: cleanQuestion, doc_id: selectedDoc, top_k: 5, history, assistant_mode: assistantMode, answer_provider: answerProvider }),
       })
       const answeredMessages = [...pendingMessages, {
         id: crypto.randomUUID(),
@@ -519,11 +522,22 @@ function App() {
     }
   }
 
+  function changeAnswerProvider(nextProvider) {
+    if (asking || nextProvider === answerProvider) return
+    setAnswerProvider(nextProvider)
+    if (activeChatId) {
+      setChatHistory((current) => current.map((chat) => (
+        chat.id === activeChatId ? { ...chat, answerProvider: nextProvider } : chat
+      )))
+    }
+  }
+
   function openSavedChat(chat) {
     if (asking || chat.id === activeChatId) return
     setActiveChatId(chat.id)
     setMessages(chat.messages)
     setAssistantMode(chat.assistantMode || 'qa')
+    setAnswerProvider(chat.answerProvider || 'local')
     setSuggestions(createRandomSuggestions(
       suggestions,
       chat.assistantMode === 'engineering' ? engineeringSuggestionPool : suggestionPool,
@@ -551,6 +565,7 @@ function App() {
       setActiveChatId(remaining[0]?.id || null)
       setMessages(remaining[0]?.messages || [])
       setAssistantMode(remaining[0]?.assistantMode || 'qa')
+      setAnswerProvider(remaining[0]?.answerProvider || 'local')
       setSuggestions(createRandomSuggestions(
         suggestions,
         remaining[0]?.assistantMode === 'engineering' ? engineeringSuggestionPool : suggestionPool,
@@ -786,7 +801,7 @@ function App() {
           <span className="status-dot" aria-hidden="true" />
           <div>
             <strong>{online ? '问答服务已连接' : health.status === 'checking' ? '正在连接' : '问答服务未连接'}</strong>
-            <small>{online ? (health.generator === 'ollama' ? `${health.model} 回答` : '资料检索模式') : '点击右侧进行设置'}</small>
+            <small>{online ? (health.generator === 'ollama' ? `${health.model} / 本地 Qwen` : health.generator === 'deepseek' ? `${health.deepseek_model || 'DeepSeek'} API 已配置` : '资料检索模式') : '点击右侧进行设置'}</small>
           </div>
           <button type="button" aria-label="连接设置" onClick={() => setSettingsOpen(true)}>•••</button>
         </div>
@@ -829,6 +844,11 @@ function App() {
                 <button type="button" role="tab" aria-selected={assistantMode === 'qa'} className={assistantMode === 'qa' ? 'active' : ''} disabled={asking} onClick={() => changeAssistantMode('qa')}>手册问答</button>
                 <button type="button" role="tab" aria-selected={assistantMode === 'engineering'} className={assistantMode === 'engineering' ? 'active' : ''} disabled={asking} onClick={() => changeAssistantMode('engineering')}>工程助手</button>
               </div>
+              <div className="provider-switch" role="tablist" aria-label="回答引擎">
+                <span>回答引擎</span>
+                <button type="button" role="tab" aria-selected={answerProvider === 'local'} className={answerProvider === 'local' ? 'active' : ''} disabled={asking} onClick={() => changeAnswerProvider('local')}>本地 Qwen</button>
+                <button type="button" role="tab" aria-selected={answerProvider === 'deepseek'} className={answerProvider === 'deepseek' ? 'active' : ''} disabled={asking} title={health.deepseek_configured ? '使用 DeepSeek API' : '后端尚未配置 DeepSeek API 密钥'} onClick={() => changeAnswerProvider('deepseek')}>DeepSeek API</button>
+              </div>
               <span><i /> {activeDocName ? `当前只查：${activeDocName}` : assistantMode === 'engineering' ? '基于手册生成接线与配置方案' : '依据全部已索引资料回答'}</span>
             </div>
             {activeDocName && <button className="clear-filter" type="button" onClick={() => setSelectedDoc(null)}>取消限定</button>}
@@ -839,7 +859,7 @@ function App() {
               <>
                 <div className="message ai-message">
                   <p>你好，我已经连接到当前的芯片资料库。</p>
-                  <p>{assistantMode === 'engineering' ? '工程助手会把问题整理成接线、元件、配置和风险清单，并标出手册页码。' : '你可以问寄存器、引脚、时序或板级连接问题，我会同时给出手册页码。'}</p>
+                  <p>{assistantMode === 'engineering' ? '工程助手会把问题整理成接线、元件、配置和风险清单，并标出手册页码。' : '你可以问寄存器、引脚、时序或板级连接问题，我会同时给出手册页码。'} 当前使用：{answerProvider === 'deepseek' ? 'DeepSeek API' : '本地 Qwen'}。</p>
                 </div>
                 <div className="suggestions" aria-label="示例问题">
                   {suggestions.map((item) => <button type="button" key={item} onClick={() => askQuestion(item)}>{item}</button>)}
