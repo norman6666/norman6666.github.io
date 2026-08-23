@@ -198,13 +198,76 @@ function linkEvidenceCitations(content, messageId, sources = []) {
 
 function normalizeMarkdownTables(content) {
   if (!content || !content.includes('|')) return content
-  // Qwen 偶尔会把换行输出成字面量 \n，或把整张表压到一行；先恢复真实换行。
-  let normalized = content
+  // 模型偶尔会把换行输出成字面量 \\n，或把整张表压到一行；先恢复真实换行。
+  const normalized = content
     .replace(/\\r\\n/g, '\n')
     .replace(/\\n/g, '\n')
-  const hasSeparator = /\|\s*:?-{3,}\s*\|/.test(normalized)
-  if (!hasSeparator) return content
-  // 表头和分隔线之间可能多了一个空的单元格分隔符。
+    .replace(/\|\s*\|(?=\s*:?-{3,})/g, '|\n|')
+
+  const lines = normalized.split('\n')
+  const splitCells = (line) => line
+    .trim()
+    .replace(/^\|/, '')
+    .replace(/\|$/, '')
+    .split('|')
+    .map((cell) => cell.trim())
+
+  const isSeparator = (line) => {
+    const cells = splitCells(line)
+    return cells.length > 0 && cells.every((cell) => /^:?-{3,}:?$/.test(cell))
+  }
+
+  const renderRow = (cells, count) => {
+    const values = cells.slice(0, count)
+    while (values.length < count) values.push('')
+    return `| ${values.join(' | ')} |`
+  }
+
+  const repaired = []
+  let index = 0
+  while (index < lines.length) {
+    const header = lines[index]
+    const separator = lines[index + 1]
+    if (!header.includes('|') || !separator || !separator.includes('|') || !isSeparator(separator)) {
+      repaired.push(header)
+      index += 1
+      continue
+    }
+
+    const columnCount = splitCells(header).length
+    if (columnCount < 2) {
+      repaired.push(header)
+      index += 1
+      continue
+    }
+
+    repaired.push(renderRow(splitCells(header), columnCount))
+    repaired.push(renderRow(splitCells(separator), columnCount))
+    index += 2
+
+    // 按表头列数重组数据行。DeepSeek 有时会把一行拆成两行，或把多行压成一行。
+    let pending = []
+    while (index < lines.length) {
+      const line = lines[index]
+      if (!line.trim() || !line.includes('|')) break
+      const cells = splitCells(line)
+      if (!cells.length) {
+        index += 1
+        continue
+      }
+      pending.push(...cells)
+      while (pending.length >= columnCount) {
+        repaired.push(renderRow(pending.splice(0, columnCount), columnCount))
+      }
+      index += 1
+    }
+    if (pending.length) repaired.push(renderRow(pending, columnCount))
+  }
+
+  return repaired.join('\n')
+  /*
+  // 旧版的启发式规则保留在这里作为说明：仅靠信号名前缀拆行会把
+  // “TIM1 | CH1 | PA8”误拆成两行，因此不能继续用于 API 模型输出。
   normalized = normalized
     .replace(/\|\s*\|(?=\s*:?-{3,})/g, '|\n|')
     .replace(/\|\s*(?=\d+\s*\|)/g, '\n|')
@@ -213,6 +276,7 @@ function normalizeMarkdownTables(content) {
     // 表格分隔线和数据行之间不允许空行，否则 GFM 会提前结束表格。
     .replace(/(\|\s*:?-{3,}[^\n]*\|)\n(?:\s*\n)+(?=\s*\|)/g, '$1\n')
   return normalized
+  */
 }
 
 function evidencePageSummary(sources = []) {
